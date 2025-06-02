@@ -1,0 +1,36 @@
+import 'package:clean_ecommerce/data/mappers/product_mapper.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
+import 'package:clean_ecommerce/domain/result/result.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class ProductDetailsDataSource extends ProductDetailsRepository {
+  final http.Client httpClient;
+  final String baseUrl;
+
+  ProductDetailsDataSource({
+    http.Client? httpClient,
+    this.baseUrl = 'http://localhost:3000',
+  }) : httpClient = httpClient ?? http.Client();
+  @override
+  Future<Result<Product>> getProductDetails(String id) async {
+    try {
+      // await Future.delayed(const Duration(milliseconds: 1500));
+      final response = await httpClient.get(Uri.parse('$baseUrl/products/$id'));
+
+      if (response.statusCode != 200) {
+        return Result.failure(
+          'Failed to load product details: ${response.statusCode}',
+        );
+      }
+
+      final product = getProductFromMap(jsonDecode(response.body));
+
+      return Result.success(product);
+    } catch (e) {
+      return Result.failure('Failed to load product details.');
+    }
+  }
+}
