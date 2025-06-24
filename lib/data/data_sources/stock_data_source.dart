@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/data/data_config.dart';
 import 'package:clean_ecommerce/data/data_models/stock_data_model.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/result/result.dart';
@@ -9,10 +10,9 @@ class StockDataSource implements StockRepository {
   final http.Client httpClient;
   final String baseUrl;
 
-  StockDataSource({
-    http.Client? httpClient,
-    this.baseUrl = 'http://localhost:3000',
-  }) : httpClient = httpClient ?? http.Client();
+  StockDataSource({http.Client? httpClient, String? baseUrl})
+    : httpClient = httpClient ?? http.Client(),
+      baseUrl = baseUrl ?? DataConfig.apiUrl;
 
   @override
   Future<Result<int>> getStockAvailable(String productId) async {

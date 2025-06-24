@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/data/data_config.dart';
 import 'package:clean_ecommerce/data/mappers/product_mapper.dart';
 import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
@@ -10,14 +11,12 @@ class ProductDetailsDataSource extends ProductDetailsRepository {
   final http.Client httpClient;
   final String baseUrl;
 
-  ProductDetailsDataSource({
-    http.Client? httpClient,
-    this.baseUrl = 'http://localhost:3000',
-  }) : httpClient = httpClient ?? http.Client();
+  ProductDetailsDataSource({http.Client? httpClient, String? baseUrl})
+    : httpClient = httpClient ?? http.Client(),
+      baseUrl = baseUrl ?? DataConfig.apiUrl;
   @override
   Future<Result<Product>> getProductDetails(String id) async {
     try {
-      // await Future.delayed(const Duration(milliseconds: 1500));
       final response = await httpClient.get(Uri.parse('$baseUrl/products/$id'));
 
       if (response.statusCode != 200) {
