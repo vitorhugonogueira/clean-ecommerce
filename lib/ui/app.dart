@@ -9,8 +9,9 @@ class EcommerceApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce App',
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 241, 241, 241),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 26, 145, 62),
+          seedColor: const Color.fromARGB(255, 19, 102, 197),
         ),
         useMaterial3: true,
       ),

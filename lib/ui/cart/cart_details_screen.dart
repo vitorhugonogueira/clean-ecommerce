@@ -9,6 +9,8 @@ import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase
 import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.dart';
 import 'package:clean_ecommerce/ui/cart/cart_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
+import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class CartDetailsScreen extends StatefulWidget {
@@ -134,8 +136,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Your Cart')),
+    return CleanScaffold(
+      title: 'Bag',
+      navigator: AppNavigator(context),
       body: _buildBodyContent(),
     );
   }
@@ -153,19 +156,19 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              Icons.shopping_cart_outlined,
+              Icons.shopping_bag_outlined,
               size: 60,
               color: Colors.grey,
             ),
             const SizedBox(height: 16),
             Text(
-              'Your cart is empty.',
+              'Your bag is empty.',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(), // Go back
-              child: const Text('Continue Shopping'),
+              child: const Text('Continue shopping'),
             ),
           ],
         ),

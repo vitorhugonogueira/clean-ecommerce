@@ -6,6 +6,7 @@ import 'package:clean_ecommerce/domain/usecases/cart/add_item_to_cart_usecase.da
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
 import 'package:clean_ecommerce/ui/product/details/product_details_screen_presenter.dart';
 import 'package:flutter/material.dart';
 
@@ -102,25 +103,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return _disabledForActions || _state.stock <= 0;
   }
 
-  void _goCart() {
-    _navigator.goCart();
-  }
-
   @override
   Widget build(BuildContext context) {
     var title = _state.product?.name ?? 'Product Details';
     if (_isLoadingDetails) {
-      title = 'Loading...';
+      title = '';
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        actions: [
-          IconButton(onPressed: _goCart, icon: const Icon(Icons.shopping_cart)),
-          const SizedBox(width: 30),
-        ],
-      ),
+    return CleanScaffold(
+      title: title,
+      navigator: AppNavigator(context),
       body: _buildBodyContent(),
     );
   }

@@ -3,6 +3,7 @@ import 'package:clean_ecommerce/domain/states/product_listing_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
 import 'package:clean_ecommerce/ui/product/listing/product_listing_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/product/listing/widgets/product_card_widget.dart';
 import 'package:clean_ecommerce/ui/product/listing/widgets/product_listing_reload_button.dart';
@@ -56,20 +57,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     _useCase.execute();
   }
 
-  void _goCart() {
-    _navigator.goCart();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Clean Arch E-commerce'),
-        actions: [
-          IconButton(onPressed: _goCart, icon: const Icon(Icons.shopping_cart)),
-          const SizedBox(width: 30),
-        ],
-      ),
+    return CleanScaffold(
+      title: 'CLEAN ARCH E-COMMERCE',
+      navigator: AppNavigator(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

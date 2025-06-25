@@ -4,4 +4,8 @@ class DataConfig {
   static String get apiUrl {
     return dotenv.env['API_URL'] ?? 'http://localhost:3000';
   }
+
+  static String get productImagesUrl {
+    return dotenv.env['PRODUCT_IMAGES_URL'] ?? 'http://localhost:3000';
+  }
 }

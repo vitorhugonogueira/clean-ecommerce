@@ -1,3 +1,5 @@
+import 'package:clean_ecommerce/ui/common/widgets/card/simple_card.dart';
+import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_ecommerce/domain/models/product.dart'; // Adjust import path if needed
 
@@ -12,53 +14,52 @@ class ProductCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      child: InkWell(
-        onTap: () => onTap(product.id),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 50,
+    return InkWell(
+      onTap: () => onTap(product.id),
+      child: SimpleCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                color: colorScheme.secondary,
                 width: double.infinity,
-                child: Text(
-                  product.name,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: ProductImage(product: product),
               ),
-              const SizedBox(height: 4.0),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 25,
+                      width: double.infinity,
+                      child: Text(
+                        product.name,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
 
-              SizedBox(
-                height: 40,
-                width: double.infinity,
-                child: Text(
-                  product.description,
-                  style: textTheme.bodySmall,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                    Text(
+                      product.priceLabel,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                  ],
                 ),
               ),
-              const SizedBox(height: 8.0),
-
-              Expanded(
-                child: Text(
-                  product.priceLabel,
-                  style: textTheme.titleSmall?.copyWith(
-                    color: colorScheme.secondary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12.0),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
