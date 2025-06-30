@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class CleanAppBar extends AppBar {
   CleanAppBar({
     super.key,
-    required String title,
+    String? title,
     required AppNavigator navigator,
     List<Widget>? actions,
   }) : super(
-         title: Text(title),
+         title: CleanArchAppTitle(title: title),
          actions:
              actions ??
              [
@@ -19,4 +19,27 @@ class CleanAppBar extends AppBar {
                const SizedBox(width: 30),
              ],
        );
+}
+
+class CleanArchAppTitle extends StatelessWidget {
+  const CleanArchAppTitle({super.key, this.title});
+
+  final String? title;
+
+  @override
+  Widget build(BuildContext context) {
+    if (title != null) {
+      return Text(title!, style: TextStyle(fontWeight: FontWeight.bold));
+    }
+    return const Row(
+      children: [
+        Text('CLEAN ARCH', style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(width: 6),
+        Text(
+          'E-COMMERCE',
+          style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20.0),
+        ),
+      ],
+    );
+  }
 }

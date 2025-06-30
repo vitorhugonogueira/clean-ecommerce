@@ -14,6 +14,7 @@ class EcommerceApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 19, 102, 197),
         ),
         useMaterial3: true,
+        fontFamily: 'Montserrat',
       ),
       home: const ProductListingScreen(),
     );

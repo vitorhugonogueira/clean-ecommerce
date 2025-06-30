@@ -60,7 +60,6 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   @override
   Widget build(BuildContext context) {
     return CleanScaffold(
-      title: 'CLEAN ARCH E-COMMERCE',
       navigator: AppNavigator(context),
       body: Center(
         child: Column(

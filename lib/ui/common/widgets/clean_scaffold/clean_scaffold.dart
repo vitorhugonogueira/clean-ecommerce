@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CleanScaffold extends Scaffold {
   CleanScaffold({
     super.key,
-    required String title,
+    String? title,
     List<Widget>? actions,
     required Widget super.body,
     required AppNavigator navigator,
