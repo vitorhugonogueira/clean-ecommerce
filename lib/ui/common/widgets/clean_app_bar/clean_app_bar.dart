@@ -28,16 +28,28 @@ class CleanArchAppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (title != null) {
+    if (title != null && title!.isNotEmpty) {
       return Text(title!, style: TextStyle(fontWeight: FontWeight.bold));
     }
-    return const Row(
+    return Row(
       children: [
-        Text('CLEAN ARCH', style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(width: 6),
-        Text(
-          'E-COMMERCE',
-          style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20.0),
+        const Text('CLEAN ARCH', style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(width: 6),
+        Flexible(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > 120) {
+                return const Text(
+                  'E-COMMERCE',
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20.0),
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
       ],
     );
