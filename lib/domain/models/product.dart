@@ -13,5 +13,5 @@ class Product {
     required this.imageUrl,
   });
 
-  get priceLabel => '\$${price.toStringAsFixed(2)}';
+  get priceLabel => '\$ ${price.toStringAsFixed(2)}';
 }

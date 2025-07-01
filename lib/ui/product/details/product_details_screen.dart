@@ -1,6 +1,7 @@
 import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/add_item_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
@@ -8,6 +9,7 @@ import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
 import 'package:clean_ecommerce/ui/product/details/product_details_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -147,87 +149,139 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 800) {
+            return _contentForLargeScreen(product, textTheme, colorScheme);
+          } else {
+            return _contentForSmallScreen(product, textTheme, colorScheme);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _contentForSmallScreen(
+    Product product,
+    TextTheme textTheme,
+    ColorScheme colorScheme,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 500) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: ProductImage(product: product),
+              );
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: ProductImage(product: product),
+            );
+          },
+        ),
+
+        const SizedBox(height: 24),
+
+        _buildDetails(product, textTheme, colorScheme),
+        const SizedBox(height: 36),
+
+        _buildActions(textTheme, colorScheme),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _contentForLargeScreen(
+    Product product,
+    TextTheme textTheme,
+    ColorScheme colorScheme,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 120.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (product.imageUrl.isNotEmpty)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                product.imageUrl,
-                height: 250,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, progress) {
-                  return progress == null
-                      ? child
-                      : const Center(
-                        heightFactor: 2,
-                        child: CircularProgressIndicator(),
-                      );
-                },
-                errorBuilder: (context, error, stack) {
-                  return Container(
-                    height: 250,
-                    color: Colors.grey[200],
-                    child: const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        size: 50,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          const SizedBox(height: 24),
-
-          Text(product.name, style: textTheme.headlineMedium),
-          const SizedBox(height: 8),
-
-          Text('Stock:: ${_state.stock}', style: textTheme.headlineMedium),
-          const SizedBox(height: 8),
-
-          Text(
-            product.priceLabel,
-            style: textTheme.headlineSmall?.copyWith(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ProductImage(product: product),
             ),
           ),
-          const SizedBox(height: 16),
-          const SizedBox(height: 24),
-
-          Text('Description', style: textTheme.titleLarge),
-          const SizedBox(height: 8),
-          Text(product.description, style: textTheme.bodyLarge),
-          const SizedBox(height: 32),
-
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              textStyle: textTheme.titleMedium,
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
+          const SizedBox(width: 24),
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildDetails(product, textTheme, colorScheme),
+                const SizedBox(height: 36),
+                _buildActions(textTheme, colorScheme),
+                const SizedBox(height: 16),
+              ],
             ),
-            onPressed: isDisabledFroActions() ? null : _handleToBuy,
-            child: const Text('Buy'),
           ),
-          const SizedBox(height: 16),
-
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              textStyle: textTheme.titleMedium,
-              backgroundColor: colorScheme.surface,
-              foregroundColor: colorScheme.onSurface,
-            ),
-            onPressed: isDisabledFroActions() ? null : _handleAddToCart,
-            child: const Text('Add to cart'),
-          ),
-          const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+
+  Widget _buildDetails(
+    Product product,
+    TextTheme textTheme,
+    ColorScheme colorScheme,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(product.name, style: textTheme.headlineMedium),
+        const SizedBox(height: 8),
+        Text(product.description, style: textTheme.bodyLarge),
+        const SizedBox(height: 8),
+
+        Text(
+          product.priceLabel,
+          style: textTheme.headlineSmall?.copyWith(
+            color: colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 36),
+        Text('Available in stock: ${_state.stock}', style: textTheme.bodyLarge),
+      ],
+    );
+  }
+
+  Widget _buildActions(TextTheme textTheme, ColorScheme colorScheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            textStyle: textTheme.titleMedium,
+            backgroundColor: colorScheme.primary,
+            foregroundColor: colorScheme.onPrimary,
+          ),
+          onPressed: isDisabledFroActions() ? null : _handleToBuy,
+          child: const Text('Buy'),
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            textStyle: textTheme.titleMedium,
+            backgroundColor: colorScheme.surface,
+            foregroundColor: colorScheme.onSurface,
+          ),
+          onPressed: isDisabledFroActions() ? null : _handleAddToCart,
+          child: const Text('Add to bag'),
+        ),
+      ],
     );
   }
 }

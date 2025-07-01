@@ -70,6 +70,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.builder(
+                    padding: const EdgeInsets.only(bottom: 120.0),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 250.0,
