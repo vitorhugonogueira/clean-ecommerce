@@ -59,4 +59,6 @@ class Cart {
   Item? getItem(String productId) {
     return items.firstWhereOrNull((item) => item.product.id == productId);
   }
+
+  String get totalLabel => '\$ ${total.toStringAsFixed(2)}';
 }

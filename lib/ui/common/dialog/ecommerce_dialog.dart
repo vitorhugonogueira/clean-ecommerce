@@ -28,7 +28,7 @@ class EcommerceDialog implements DialogGateway {
               Text(title),
             ],
           ),
-          content: Text(message, style: TextStyle(color: color)),
+          content: Text(message, style: Theme.of(context).textTheme.bodyLarge),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
@@ -71,7 +71,7 @@ class EcommerceDialog implements DialogGateway {
   @override
   void showWarning(String message) {
     _showEcommerceDialog(
-      title: 'Warning',
+      title: 'Attention',
       message: message,
       icon: Icons.warning_amber_outlined,
       color: Colors.orange.shade700,

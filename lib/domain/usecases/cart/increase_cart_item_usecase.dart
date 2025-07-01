@@ -35,7 +35,7 @@ class IncreaseCartItemUsecase {
     final newQuantity = item.quantity + 1;
     if (newQuantity > stockResult.content!) {
       dialog.showWarning(
-        'Sorry, we currently do not have sufficient stock for quantity $newQuantity of this item.',
+        'Sorry, we currently do not have enough stock for quantity $newQuantity of ${item.product.name}.',
       );
       return;
     }

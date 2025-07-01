@@ -11,6 +11,7 @@ import 'package:clean_ecommerce/ui/cart/cart_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
+import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
 
 class CartDetailsScreen extends StatefulWidget {
@@ -101,9 +102,6 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
     }
     setState(() => _isUpdatingItem = true);
     try {
-      // Prevent quantity from going below 1 with decrease,
-      // or remove if it's the last one.
-      // The use case itself handles removal if quantity becomes 0.
       await _decreaseItemUseCase.execute(
         productId: productId,
         cart: _state.cart!,
@@ -127,8 +125,6 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
       );
     } finally {
       if (mounted) {
-        // If the cart becomes empty, the presenter should update the state,
-        // and _buildBodyContent will show the "empty cart" message.
         setState(() => _isUpdatingItem = false);
       }
     }
@@ -139,11 +135,11 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
     return CleanScaffold(
       title: 'Bag',
       navigator: AppNavigator(context),
-      body: _buildBodyContent(),
+      body: _buildBodyContent(context),
     );
   }
 
-  Widget _buildBodyContent() {
+  Widget _buildBodyContent(BuildContext context) {
     if (_inProgress) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -175,68 +171,113 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
       );
     }
 
-    // If cart has items, display them in a ListView
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      itemCount: cart.items.length,
-      itemBuilder: (context, index) {
-        final item = cart.items[index];
-        return _buildCartItemTile(item);
-      },
-      separatorBuilder: (context, index) => const Divider(height: 1),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 700),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Total: ${cart.totalLabel}',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                itemCount: cart.items.length,
+                itemBuilder: (context, index) {
+                  final item = cart.items[index];
+                  return _buildCartItemCard(item);
+                },
+              ),
+              const SizedBox(height: 48),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildCartItemTile(Item item) {
+  Widget _buildCartItemCard(Item item) {
     final product = item.product;
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return ListTile(
-      leading: SizedBox(
-        width: 60,
-        height: 60,
-        child:
-            product.imageUrl.isNotEmpty
-                ? Image.network(
-                  product.imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder:
-                      (ctx, err, st) => const Icon(Icons.image_not_supported),
-                )
-                : const Icon(Icons.image_not_supported),
-      ),
-      title: Text(product.name, style: textTheme.titleMedium),
-      subtitle: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
-            iconSize: 20,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            onPressed:
-                _isUpdatingItem ? null : () => _decreaseQuantity(product.id),
-            tooltip: 'Decrease quantity',
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 60,
+              height: 60,
+              child: ProductImage(product: product),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.name, style: textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.remove_circle_outline),
+                        iconSize: 20,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed:
+                            _isUpdatingItem
+                                ? null
+                                : () => _decreaseQuantity(product.id),
+                        tooltip: 'Decrease quantity',
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          '${item.quantity}',
+                          style: textTheme.bodyLarge,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.add_circle_outline),
+                        iconSize: 20,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed:
+                            _isUpdatingItem
+                                ? null
+                                : () => _increaseQuantity(product.id),
+                        tooltip: 'Increase quantity',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text('${item.quantity}', style: textTheme.bodyLarge),
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            iconSize: 20,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            onPressed:
-                _isUpdatingItem ? null : () => _increaseQuantity(product.id),
-            tooltip: 'Increase quantity',
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(Icons.delete_outline, color: colorScheme.secondary),
+              tooltip: 'Remove item',
+              onPressed: _isUpdatingItem ? null : () => _removeItem(product.id),
+            ),
           ),
         ],
-      ),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-        tooltip: 'Remove item',
-        onPressed: _isUpdatingItem ? null : () => _removeItem(product.id),
       ),
     );
   }

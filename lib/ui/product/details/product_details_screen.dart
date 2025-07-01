@@ -190,7 +190,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         const SizedBox(height: 36),
 
         _buildActions(textTheme, colorScheme),
-        const SizedBox(height: 16),
+        const SizedBox(height: 48),
       ],
     );
   }
