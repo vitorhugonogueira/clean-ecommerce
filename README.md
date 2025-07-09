@@ -33,7 +33,7 @@ In this way we don't need to create DTO or ViewModel classes for entities (for n
 ### UI/Data
 
 - These are two sectors of "Frameworks and Drivers" layer. Here we can call them "layers" for make it easier, even understanding that they are on same level - side by side.
-- It means UI and Data know each other. And it do not mean that screens shoud use directily datasources to get products to fill a list. But it means the screen knows where the information came from and is able to pass to domain what it don't know (wich repsitory it can use to get products). In other words, the screen knows the datasource just to pass by parameter to the use case - respecting the separation of concerns.
+- It means UI and Data know each other. And it do not mean that screens shoud use directily datasources to get products to fill a list. But it means the screen knows where the information came from and is able to pass to domain what it don't know (which repository it can use to obtain products). In other words, the screen knows the datasource just to pass by parameter to the use case - respecting the separation of concerns.
 
 ### Domain
 
