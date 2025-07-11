@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class EcommerceDialog implements DialogGateway {
   final BuildContext context;
+  ScaffoldMessengerState? _currentMessenger;
 
   EcommerceDialog(this.context);
 
@@ -80,8 +81,25 @@ class EcommerceDialog implements DialogGateway {
 
   @override
   void notifySuccess(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 3)),
+    final messenger = _getScaffoldMessenger();
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        action: SnackBarAction(
+          label: 'Ok',
+          onPressed: () {
+            messenger.hideCurrentSnackBar();
+          },
+        ),
+      ),
     );
+  }
+
+  ScaffoldMessengerState _getScaffoldMessenger() {
+    _currentMessenger ??= ScaffoldMessenger.of(context);
+
+    return _currentMessenger!;
   }
 }
