@@ -11,11 +11,13 @@ class CleanScaffold extends Scaffold {
     required AppNavigator navigator,
     super.floatingActionButton,
     super.floatingActionButtonLocation,
+    Function? callbackCartAction,
   }) : super(
          appBar: CleanAppBar(
            title: title,
            actions: actions,
            navigator: navigator,
+           callbackCartAction: callbackCartAction,
          ),
        );
 }

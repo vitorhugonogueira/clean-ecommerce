@@ -10,14 +10,17 @@ class AppNavigator implements NavigatorGateway {
   AppNavigator(this.context);
 
   @override
-  void goCart({Cart? cart}) {
-    Navigator.push(
+  void goCart({Cart? cart, Function? callback}) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         settings: RouteSettings(name: '/cart'),
         builder: (context) => CartDetailsScreen(cart: cart),
       ),
     );
+    if (callback != null) {
+      callback();
+    }
   }
 
   @override

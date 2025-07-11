@@ -11,6 +11,7 @@ import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.
 import 'package:clean_ecommerce/ui/product/details/product_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
+import 'package:clean_ecommerce/domain/usecases/product/update_product_stock_details_usecase.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final String productId;
@@ -22,6 +23,7 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  late UpdateProductStockDetailsUseCase _updateDetailsUseCase;
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddItemToCartUseCase _addItemToCartUseCase;
   late AppNavigator _navigator;
@@ -63,13 +65,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       cartRepository: cartDataSource,
       stockRepository: stockDataSource,
     );
-
     _addItemToCartUseCase = AddItemToCartUseCase(
       cartRepository: cartDataSource,
       dialog: dialog,
       navigator: _navigator,
       presenter: presenter,
       stockRepository: stockDataSource,
+    );
+    _updateDetailsUseCase = UpdateProductStockDetailsUseCase(
+      cartRepository: cartDataSource,
+      stockRepository: stockDataSource,
+      presenter: presenter,
+      dialog: dialog,
     );
 
     _fetchProductDetails();
@@ -114,6 +121,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return CleanScaffold(
       title: title,
+      callbackCartAction: () {
+        if (_state.product != null) {
+          _updateDetailsUseCase.execute(product: _state.product!);
+          return;
+        }
+        _fetchProductDetails();
+      },
       navigator: AppNavigator(context),
       body: _buildBodyContent(),
     );

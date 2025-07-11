@@ -5,6 +5,7 @@ import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
+import 'package:clean_ecommerce/domain/usecases/product/update_product_stock_details_usecase.dart';
 
 class AddItemToCartUseCase {
   final CartRepository cartRepository;
@@ -70,7 +71,18 @@ class AddItemToCartUseCase {
       return;
     }
 
-    navigator.goCart(cart: cart);
+    navigator.goCart(
+      cart: cart,
+      callback: () {
+        final updateUseCase = UpdateProductStockDetailsUseCase(
+          cartRepository: cartRepository,
+          stockRepository: stockRepository,
+          presenter: presenter,
+          dialog: dialog,
+        );
+        updateUseCase.execute(product: productState.product!);
+      },
+    );
     return;
   }
 }

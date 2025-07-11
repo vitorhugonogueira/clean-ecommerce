@@ -7,13 +7,15 @@ class CleanAppBar extends AppBar {
     String? title,
     required AppNavigator navigator,
     List<Widget>? actions,
+    Function? callbackCartAction,
   }) : super(
          title: CleanArchAppTitle(title: title),
          actions:
              actions ??
              [
                IconButton(
-                 onPressed: () => navigator.goCart(),
+                 onPressed:
+                     () => navigator.goCart(callback: callbackCartAction),
                  icon: const Icon(Icons.shopping_bag_sharp),
                ),
                const SizedBox(width: 30),
