@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../mocks/product_mock.dart';
+import '../../mocks/models/product_mock.dart';
 
 void main() {
   group('Item - Produto1', () {

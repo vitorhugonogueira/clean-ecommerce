@@ -1,8 +1,7 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../mocks/product_mock.dart';
+import '../../mocks/models/product_mock.dart';
 
 void main() {
   group('Cart', () {

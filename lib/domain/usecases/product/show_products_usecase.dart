@@ -1,7 +1,6 @@
 import 'package:clean_ecommerce/domain/repositories/product_listing_repository.dart';
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
 import 'package:clean_ecommerce/domain/presenters/product_listing_presenter.dart';
-import 'package:clean_ecommerce/domain/states/product_listing_state.dart';
 
 class ShowProductsUseCase {
   final ProductListingRepository repository;
@@ -25,16 +24,7 @@ class ShowProductsUseCase {
       return;
     }
 
-    final listing = result.content!;
-    presenter.show(
-      ProductListingState(
-        products: listing.products,
-        page: listing.page,
-        totalOfPages: listing.totalOfPages,
-        pageSize: listing.pageSize,
-      ),
-    );
-
+    presenter.show(result.content!);
     presenter.setInProgress(false);
   }
 }
