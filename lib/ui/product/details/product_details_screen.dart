@@ -109,7 +109,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   bool isDisabledFroActions() {
-    return _disabledForActions || _state.stock <= 0;
+    return _disabledForActions || !_state.stockIsAvailable;
   }
 
   @override
