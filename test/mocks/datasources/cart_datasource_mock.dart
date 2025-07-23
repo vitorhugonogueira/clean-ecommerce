@@ -8,8 +8,8 @@ class CartDataSourceMock extends CartRepository {
 
   CartDataSourceMock._(this._savingResult, this._getCartResult);
 
-  factory CartDataSourceMock.saveSuccess(bool status, Cart? getCartResult) =>
-      CartDataSourceMock._(Result.success(status), getCartResult);
+  factory CartDataSourceMock.saveSuccess(Cart? getCartResult) =>
+      CartDataSourceMock._(Result.success(true), getCartResult);
 
   factory CartDataSourceMock.saveFail(
     String errorMessage,

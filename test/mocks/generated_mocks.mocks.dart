@@ -5,6 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
+import 'package:clean_ecommerce/domain/states/cart_details_state.dart' as _i9;
 import 'package:clean_ecommerce/domain/states/product_details_state.dart'
     as _i7;
 import 'package:clean_ecommerce/domain/states/product_listing_state.dart'
@@ -12,6 +13,7 @@ import 'package:clean_ecommerce/domain/states/product_listing_state.dart'
 import 'package:mockito/mockito.dart' as _i1;
 
 import 'common/dialog_mock.dart' as _i2;
+import 'presenters/cart_details_presenter.dart' as _i8;
 import 'presenters/product_details_presenter.dart' as _i6;
 import 'presenters/product_listing_presenter.dart' as _i4;
 
@@ -103,6 +105,28 @@ class MockProductDetailsPresenterMockito extends _i1.Mock
 
   @override
   void show(_i7.ProductDetailsState? state) => super.noSuchMethod(
+    Invocation.method(#show, [state]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void setInProgress(bool? inProgress) => super.noSuchMethod(
+    Invocation.method(#setInProgress, [inProgress]),
+    returnValueForMissingStub: null,
+  );
+}
+
+/// A class which mocks [CartDetailsPresenterMockito].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCartDetailsPresenterMockito extends _i1.Mock
+    implements _i8.CartDetailsPresenterMockito {
+  MockCartDetailsPresenterMockito() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void show(_i9.CartDetailsState? state) => super.noSuchMethod(
     Invocation.method(#show, [state]),
     returnValueForMissingStub: null,
   );
