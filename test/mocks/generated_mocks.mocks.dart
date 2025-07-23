@@ -5,11 +5,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
+import 'package:clean_ecommerce/domain/states/product_details_state.dart'
+    as _i7;
 import 'package:clean_ecommerce/domain/states/product_listing_state.dart'
     as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 import 'common/dialog_mock.dart' as _i2;
+import 'presenters/product_details_presenter.dart' as _i6;
 import 'presenters/product_listing_presenter.dart' as _i4;
 
 // ignore_for_file: type=lint
@@ -85,6 +88,28 @@ class MockProductListingPresenterMockito extends _i1.Mock
   @override
   void setInProgress(bool? value) => super.noSuchMethod(
     Invocation.method(#setInProgress, [value]),
+    returnValueForMissingStub: null,
+  );
+}
+
+/// A class which mocks [ProductDetailsPresenterMockito].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProductDetailsPresenterMockito extends _i1.Mock
+    implements _i6.ProductDetailsPresenterMockito {
+  MockProductDetailsPresenterMockito() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void show(_i7.ProductDetailsState? state) => super.noSuchMethod(
+    Invocation.method(#show, [state]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void setInProgress(bool? inProgress) => super.noSuchMethod(
+    Invocation.method(#setInProgress, [inProgress]),
     returnValueForMissingStub: null,
   );
 }
