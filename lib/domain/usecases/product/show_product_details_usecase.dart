@@ -22,20 +22,20 @@ class ShowProductDetailsUseCase {
   });
 
   Future<void> execute({required String productId}) async {
-    presenter.setInProgress(true);
+    presenter.setIsLoading(true);
 
     final result = await repository.getProductDetails(productId);
 
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
-      presenter.setInProgress(false);
+      presenter.setIsLoading(false);
       return;
     }
 
     final stockResult = await stockRepository.getStockAvailable(productId);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setInProgress(false);
+      presenter.setIsLoading(false);
       return;
     }
     var currentStockAvailable = stockResult.content!;
@@ -49,8 +49,8 @@ class ShowProductDetailsUseCase {
       ProductDetailsState(
         product: result.content,
         stock: currentStockAvailable,
+        isLoading: false,
       ),
     );
-    presenter.setInProgress(false);
   }
 }

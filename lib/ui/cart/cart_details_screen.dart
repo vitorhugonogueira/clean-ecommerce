@@ -72,7 +72,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   }
 
   Future<void> _increaseQuantity(String productId) async {
-    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
+    if (_state.isValidatingAction || _state.cart == null || !mounted) {
       return;
     }
     await _increaseItemUseCase.execute(
@@ -82,7 +82,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   }
 
   Future<void> _decreaseQuantity(String productId) async {
-    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
+    if (_state.isValidatingAction || _state.cart == null || !mounted) {
       return;
     }
     await _decreaseItemUseCase.execute(
@@ -92,7 +92,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   }
 
   Future<void> _removeItem(String productId) async {
-    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
+    if (_state.isValidatingAction || _state.cart == null || !mounted) {
       return;
     }
     await _removeItemUseCase.execute(productId: productId, cart: _state.cart!);
@@ -208,7 +208,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         onPressed:
-                            _state.isValidatingIncrease
+                            _state.isValidatingAction
                                 ? null
                                 : () => _decreaseQuantity(product.id),
                         tooltip: 'Decrease quantity',
@@ -226,7 +226,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         onPressed:
-                            _state.isValidatingIncrease
+                            _state.isValidatingAction
                                 ? null
                                 : () => _increaseQuantity(product.id),
                         tooltip: 'Increase quantity',
@@ -243,7 +243,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
               icon: Icon(Icons.delete_outline, color: colorScheme.secondary),
               tooltip: 'Remove item',
               onPressed:
-                  _state.isValidatingIncrease
+                  _state.isValidatingAction
                       ? null
                       : () => _removeItem(product.id),
             ),

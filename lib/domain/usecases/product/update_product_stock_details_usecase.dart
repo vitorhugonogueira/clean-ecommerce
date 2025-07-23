@@ -20,12 +20,12 @@ class UpdateProductStockDetailsUseCase {
   });
 
   Future<void> execute({required Product product}) async {
-    presenter.setInProgress(true);
+    presenter.setIsLoading(true);
 
     final stockResult = await stockRepository.getStockAvailable(product.id);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setInProgress(false);
+      presenter.setIsLoading(false);
       return;
     }
     var currentStockAvailable = stockResult.content!;
@@ -36,8 +36,11 @@ class UpdateProductStockDetailsUseCase {
     }
 
     presenter.show(
-      ProductDetailsState(product: product, stock: currentStockAvailable),
+      ProductDetailsState(
+        product: product,
+        stock: currentStockAvailable,
+        isLoading: false,
+      ),
     );
-    presenter.setInProgress(false);
   }
 }

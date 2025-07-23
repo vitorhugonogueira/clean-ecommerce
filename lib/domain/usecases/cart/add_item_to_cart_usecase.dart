@@ -36,12 +36,14 @@ class AddItemToCartUseCase {
       return;
     }
 
+    presenter.setIsValidatingAction(true);
     var cart = await cartRepository.getCart() ?? Cart();
     cart = cart.addItem(productState.product!, quantity);
 
     final result = await cartRepository.saveCart(cart);
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
+      presenter.setIsValidatingAction(false);
       return;
     }
 
@@ -50,7 +52,7 @@ class AddItemToCartUseCase {
     );
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setInProgress(false);
+      presenter.setIsValidatingAction(false);
       return;
     }
 
@@ -62,9 +64,9 @@ class AddItemToCartUseCase {
 
     if (continueShopping) {
       presenter.show(
-        ProductDetailsState(
-          product: productState.product,
+        productState.copyWith(
           stock: currentStockAvailable,
+          isValidatingAction: false,
         ),
       );
       dialog.notifySuccess('Item added to cart successfully');
@@ -83,6 +85,5 @@ class AddItemToCartUseCase {
         updateUseCase.execute(product: productState.product!);
       },
     );
-    return;
   }
 }

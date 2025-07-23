@@ -39,8 +39,8 @@ void main() {
         verifyNever(presenter.show(any));
       });
       test('should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
+        verify(presenter.setIsLoading(false)).called(1);
       });
     });
 
@@ -69,8 +69,8 @@ void main() {
         verifyNever(presenter.show(any));
       });
       test('should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
+        verify(presenter.setIsLoading(false)).called(1);
       });
     });
     group('Success - [current cart DO NOT contains that product]', () {
@@ -96,14 +96,14 @@ void main() {
             argThat(
               isA<ProductDetailsState>()
                   .having((obj) => obj.product?.id, 'id', '1')
-                  .having((obj) => obj.stock, 'stock', 5),
+                  .having((obj) => obj.stock, 'stock', 5)
+                  .having((obj) => obj.isLoading, 'isLoading', false),
             ),
           ),
         ).called(1);
       });
       test('should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
       });
     });
     group('Success - [current cart contains that product]', () {
@@ -131,15 +131,15 @@ void main() {
               argThat(
                 isA<ProductDetailsState>()
                     .having((obj) => obj.product?.id, 'id', '1')
-                    .having((obj) => obj.stock, 'stock', 2),
+                    .having((obj) => obj.stock, 'stock', 2)
+                    .having((obj) => obj.isLoading, 'isLoading', false),
               ),
             ),
           ).called(1);
         },
       );
       test('should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
       });
     });
   });

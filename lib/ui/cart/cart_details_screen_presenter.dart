@@ -18,23 +18,11 @@ class CartDetailsScreenPresenter implements CartDetailsPresenter {
 
   @override
   void setIsLoading(bool inProgress) {
-    show(
-      CartDetailsState(
-        cart: _state.cart,
-        isValidatingIncrease: _state.isValidatingIncrease,
-        isLoading: inProgress,
-      ),
-    );
+    show(_state.copyWith(isLoading: inProgress));
   }
 
   @override
-  void setIsValidatingIncrease(bool inProgress) {
-    show(
-      CartDetailsState(
-        cart: _state.cart,
-        isValidatingIncrease: inProgress,
-        isLoading: _state.isLoading,
-      ),
-    );
+  void setIsValidatingAction(bool inProgress) {
+    show(_state.copyWith(isValidatingAction: inProgress));
   }
 }

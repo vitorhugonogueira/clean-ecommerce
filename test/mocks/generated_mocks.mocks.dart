@@ -110,8 +110,14 @@ class MockProductDetailsPresenterMockito extends _i1.Mock
   );
 
   @override
-  void setInProgress(bool? inProgress) => super.noSuchMethod(
-    Invocation.method(#setInProgress, [inProgress]),
+  void setIsLoading(bool? inProgress) => super.noSuchMethod(
+    Invocation.method(#setIsLoading, [inProgress]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void setIsValidatingAction(bool? inProgress) => super.noSuchMethod(
+    Invocation.method(#setIsValidatingAction, [inProgress]),
     returnValueForMissingStub: null,
   );
 }
@@ -138,8 +144,8 @@ class MockCartDetailsPresenterMockito extends _i1.Mock
   );
 
   @override
-  void setIsValidatingIncrease(bool? inProgress) => super.noSuchMethod(
-    Invocation.method(#setIsValidatingIncrease, [inProgress]),
+  void setIsValidatingAction(bool? inProgress) => super.noSuchMethod(
+    Invocation.method(#setIsValidatingAction, [inProgress]),
     returnValueForMissingStub: null,
   );
 }

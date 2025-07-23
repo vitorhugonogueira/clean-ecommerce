@@ -25,11 +25,11 @@ class IncreaseCartItemUsecase {
       return;
     }
 
-    presenter.setIsValidatingIncrease(true);
+    presenter.setIsValidatingAction(true);
     final stockResult = await stockRepository.getStockAvailable(productId);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setIsValidatingIncrease(false);
+      presenter.setIsValidatingAction(false);
       return;
     }
 
@@ -38,7 +38,7 @@ class IncreaseCartItemUsecase {
       dialog.showWarning(
         'Sorry, we currently do not have enough stock for quantity $newQuantity of ${item.product.name}.',
       );
-      presenter.setIsValidatingIncrease(false);
+      presenter.setIsValidatingAction(false);
       return;
     }
 
@@ -46,11 +46,11 @@ class IncreaseCartItemUsecase {
     final result = await cartRepository.saveCart(updatedCart);
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
-      presenter.setIsValidatingIncrease(false);
+      presenter.setIsValidatingAction(false);
       return;
     }
 
-    presenter.setIsValidatingIncrease(false);
+    presenter.setIsValidatingAction(false);
     presenter.show(CartDetailsState(cart: updatedCart));
   }
 }

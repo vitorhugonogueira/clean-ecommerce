@@ -29,8 +29,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late AppNavigator _navigator;
 
   ProductDetailsState _state = ProductDetailsState();
-  bool _isLoadingDetails = false;
-  bool _disabledForActions = false;
 
   @override
   void initState() {
@@ -48,12 +46,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         if (!mounted) return;
         setState(() {
           _state = newState;
-        });
-      },
-      onInProgressChanged: (inProgress) {
-        if (!mounted) return;
-        setState(() {
-          _isLoadingDetails = inProgress;
         });
       },
     );
@@ -82,40 +74,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     _fetchProductDetails();
   }
 
-  Future<void> _fetchProductDetails() async {
-    await _showDetailsUseCase.execute(productId: widget.productId);
+  _fetchProductDetails() {
+    _showDetailsUseCase.execute(productId: widget.productId);
   }
 
-  Future<void> _add({required bool continueShopping}) async {
-    if (_disabledForActions) {
-      return;
-    }
-
-    setState(() => _disabledForActions = true);
-    await _addItemToCartUseCase.execute(
+  _add({required bool continueShopping}) {
+    _addItemToCartUseCase.execute(
       productState: _state,
       quantity: 1,
       continueShopping: continueShopping,
     );
-    setState(() => _disabledForActions = false);
   }
 
-  Future<void> _handleAddToCart() async {
-    _add(continueShopping: true);
-  }
-
-  Future<void> _handleToBuy() async {
-    _add(continueShopping: false);
-  }
-
-  bool isDisabledFroActions() {
-    return _disabledForActions || !_state.stockIsAvailable;
-  }
+  _handleAddToCart() => _add(continueShopping: true);
+  _handleToBuy() => _add(continueShopping: false);
 
   @override
   Widget build(BuildContext context) {
     var title = _state.product?.name ?? 'Product Details';
-    if (_isLoadingDetails) {
+    if (_state.isLoading) {
       title = '';
     }
 
@@ -134,7 +111,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildBodyContent() {
-    if (_isLoadingDetails) {
+    if (_state.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -281,7 +258,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             backgroundColor: colorScheme.primary,
             foregroundColor: colorScheme.onPrimary,
           ),
-          onPressed: isDisabledFroActions() ? null : _handleToBuy,
+          onPressed: _state.isDisabled ? null : _handleToBuy,
           child: const Text('Buy'),
         ),
         const SizedBox(height: 16),
@@ -292,7 +269,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             backgroundColor: colorScheme.surface,
             foregroundColor: colorScheme.onSurface,
           ),
-          onPressed: isDisabledFroActions() ? null : _handleAddToCart,
+          onPressed: _state.isDisabled ? null : _handleAddToCart,
           child: const Text('Add to bag'),
         ),
       ],

@@ -37,7 +37,7 @@ void main() {
         verifyNever(presenter.show(any));
       });
       test('Should NOT present validation progress', () {
-        verifyNever(presenter.setIsValidatingIncrease(any));
+        verifyNever(presenter.setIsValidatingAction(any));
       });
     });
     group('Product OK, but stock repository fails', () {
@@ -69,8 +69,8 @@ void main() {
         verifyNever(presenter.show(any));
       });
       test('Should present validation progress', () {
-        verify(presenter.setIsValidatingIncrease(true)).called(1);
-        verify(presenter.setIsValidatingIncrease(false)).called(1);
+        verify(presenter.setIsValidatingAction(true)).called(1);
+        verify(presenter.setIsValidatingAction(false)).called(1);
       });
     });
     group('Product OK, but stock not available', () {
@@ -102,8 +102,8 @@ void main() {
         verifyNever(presenter.show(any));
       });
       test('Should present validation progress', () {
-        verify(presenter.setIsValidatingIncrease(true)).called(1);
-        verify(presenter.setIsValidatingIncrease(false)).called(1);
+        verify(presenter.setIsValidatingAction(true)).called(1);
+        verify(presenter.setIsValidatingAction(false)).called(1);
       });
     });
     group('Product OK, stock OK, but error on saving', () {
@@ -137,8 +137,8 @@ void main() {
         verify(dialog.showError('Some problem here on saving cart.')).called(1);
       });
       test('Should present validation progress', () {
-        verify(presenter.setIsValidatingIncrease(true)).called(1);
-        verify(presenter.setIsValidatingIncrease(false)).called(1);
+        verify(presenter.setIsValidatingAction(true)).called(1);
+        verify(presenter.setIsValidatingAction(false)).called(1);
       });
     });
     group('Product OK, stock OK, saving OK', () {
@@ -184,8 +184,8 @@ void main() {
         );
       });
       test('Should present validation progress', () {
-        verify(presenter.setIsValidatingIncrease(true)).called(1);
-        verify(presenter.setIsValidatingIncrease(false)).called(1);
+        verify(presenter.setIsValidatingAction(true)).called(1);
+        verify(presenter.setIsValidatingAction(false)).called(1);
       });
     });
   });
