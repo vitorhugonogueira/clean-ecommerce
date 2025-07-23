@@ -28,7 +28,6 @@ class IncreaseCartItemUsecase {
     final stockResult = await stockRepository.getStockAvailable(productId);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setInProgress(false);
       return;
     }
 
@@ -41,7 +40,6 @@ class IncreaseCartItemUsecase {
     }
 
     final updatedCart = cart.updateItemQuantity(productId, newQuantity);
-
     final result = await cartRepository.saveCart(updatedCart);
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
