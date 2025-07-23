@@ -3,13 +3,10 @@ import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 
 class CartDetailsScreenPresenter implements CartDetailsPresenter {
   final Function(CartDetailsState) onStateChanged;
-  final Function(bool) onInProgressChanged;
   CartDetailsState _state;
-  bool _inProgress = false;
 
   CartDetailsScreenPresenter({
     required this.onStateChanged,
-    required this.onInProgressChanged,
     required CartDetailsState initialState,
   }) : _state = initialState;
 
@@ -20,11 +17,24 @@ class CartDetailsScreenPresenter implements CartDetailsPresenter {
   }
 
   @override
-  void setInProgress(bool inProgress) {
-    _inProgress = inProgress;
-    onInProgressChanged(inProgress);
+  void setIsLoading(bool inProgress) {
+    show(
+      CartDetailsState(
+        cart: _state.cart,
+        isValidatingIncrease: _state.isValidatingIncrease,
+        isLoading: inProgress,
+      ),
+    );
   }
 
-  CartDetailsState get state => _state;
-  bool get inProgress => _inProgress;
+  @override
+  void setIsValidatingIncrease(bool inProgress) {
+    show(
+      CartDetailsState(
+        cart: _state.cart,
+        isValidatingIncrease: inProgress,
+        isLoading: _state.isLoading,
+      ),
+    );
+  }
 }

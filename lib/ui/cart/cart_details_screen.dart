@@ -29,8 +29,6 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   late DecreaseCartItemUsecase _decreaseItemUseCase;
   late RemoveItemToCartUseCase _removeItemUseCase;
   CartDetailsState _state = CartDetailsState();
-  bool _inProgress = false;
-  bool _isUpdatingItem = false;
 
   @override
   void initState() {
@@ -42,12 +40,6 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
         if (!mounted) return;
         setState(() {
           _state = newState;
-        });
-      },
-      onInProgressChanged: (inProgress) {
-        if (!mounted) return;
-        setState(() {
-          _inProgress = inProgress;
         });
       },
     );
@@ -80,54 +72,30 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   }
 
   Future<void> _increaseQuantity(String productId) async {
-    if (_isUpdatingItem || _state.cart == null || !mounted) {
+    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
       return;
     }
-    setState(() => _isUpdatingItem = true);
-    try {
-      await _increaseItemUseCase.execute(
-        productId: productId,
-        cart: _state.cart!,
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isUpdatingItem = false);
-      }
-    }
+    await _increaseItemUseCase.execute(
+      productId: productId,
+      cart: _state.cart!,
+    );
   }
 
   Future<void> _decreaseQuantity(String productId) async {
-    if (_isUpdatingItem || _state.cart == null || !mounted) {
+    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
       return;
     }
-    setState(() => _isUpdatingItem = true);
-    try {
-      await _decreaseItemUseCase.execute(
-        productId: productId,
-        cart: _state.cart!,
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isUpdatingItem = false);
-      }
-    }
+    await _decreaseItemUseCase.execute(
+      productId: productId,
+      cart: _state.cart!,
+    );
   }
 
   Future<void> _removeItem(String productId) async {
-    if (_isUpdatingItem || _state.cart == null || !mounted) {
+    if (_state.isValidatingIncrease || _state.cart == null || !mounted) {
       return;
     }
-    setState(() => _isUpdatingItem = true);
-    try {
-      await _removeItemUseCase.execute(
-        productId: productId,
-        cart: _state.cart!,
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isUpdatingItem = false);
-      }
-    }
+    await _removeItemUseCase.execute(productId: productId, cart: _state.cart!);
   }
 
   @override
@@ -140,7 +108,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   }
 
   Widget _buildBodyContent(BuildContext context) {
-    if (_inProgress) {
+    if (_state.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -240,7 +208,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         onPressed:
-                            _isUpdatingItem
+                            _state.isValidatingIncrease
                                 ? null
                                 : () => _decreaseQuantity(product.id),
                         tooltip: 'Decrease quantity',
@@ -258,7 +226,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         onPressed:
-                            _isUpdatingItem
+                            _state.isValidatingIncrease
                                 ? null
                                 : () => _increaseQuantity(product.id),
                         tooltip: 'Increase quantity',
@@ -274,7 +242,10 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
             child: IconButton(
               icon: Icon(Icons.delete_outline, color: colorScheme.secondary),
               tooltip: 'Remove item',
-              onPressed: _isUpdatingItem ? null : () => _removeItem(product.id),
+              onPressed:
+                  _state.isValidatingIncrease
+                      ? null
+                      : () => _removeItem(product.id),
             ),
           ),
         ],

@@ -38,7 +38,7 @@ void main() {
         );
       });
       test('Should not inform progress', () {
-        verifyNever(presenter.setInProgress(any));
+        verifyNever(presenter.setIsLoading(any));
       });
     });
 
@@ -69,8 +69,8 @@ void main() {
         );
       });
       test('Should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
+        verify(presenter.setIsLoading(false)).called(1);
       });
     });
     group('Without a pre informed cart - no cart in repository', () {
@@ -98,8 +98,8 @@ void main() {
         );
       });
       test('Should inform progress', () {
-        verify(presenter.setInProgress(true)).called(1);
-        verify(presenter.setInProgress(false)).called(1);
+        verify(presenter.setIsLoading(true)).called(1);
+        verify(presenter.setIsLoading(false)).called(1);
       });
     });
   });

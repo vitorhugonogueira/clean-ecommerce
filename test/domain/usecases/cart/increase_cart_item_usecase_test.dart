@@ -36,6 +36,9 @@ void main() {
       test('Should NOT present cart', () {
         verifyNever(presenter.show(any));
       });
+      test('Should NOT present validation progress', () {
+        verifyNever(presenter.setIsValidatingIncrease(any));
+      });
     });
     group('Product OK, but stock repository fails', () {
       final dialog = MockDialogMockito();
@@ -65,6 +68,10 @@ void main() {
       test('Should NOT present cart', () {
         verifyNever(presenter.show(any));
       });
+      test('Should present validation progress', () {
+        verify(presenter.setIsValidatingIncrease(true)).called(1);
+        verify(presenter.setIsValidatingIncrease(false)).called(1);
+      });
     });
     group('Product OK, but stock not available', () {
       final dialog = MockDialogMockito();
@@ -93,6 +100,10 @@ void main() {
       });
       test('Should NOT present cart', () {
         verifyNever(presenter.show(any));
+      });
+      test('Should present validation progress', () {
+        verify(presenter.setIsValidatingIncrease(true)).called(1);
+        verify(presenter.setIsValidatingIncrease(false)).called(1);
       });
     });
     group('Product OK, stock OK, but error on saving', () {
@@ -124,6 +135,10 @@ void main() {
       });
       test('Should present saving error message', () {
         verify(dialog.showError('Some problem here on saving cart.')).called(1);
+      });
+      test('Should present validation progress', () {
+        verify(presenter.setIsValidatingIncrease(true)).called(1);
+        verify(presenter.setIsValidatingIncrease(false)).called(1);
       });
     });
     group('Product OK, stock OK, saving OK', () {
@@ -167,6 +182,10 @@ void main() {
             ),
           ),
         );
+      });
+      test('Should present validation progress', () {
+        verify(presenter.setIsValidatingIncrease(true)).called(1);
+        verify(presenter.setIsValidatingIncrease(false)).called(1);
       });
     });
   });

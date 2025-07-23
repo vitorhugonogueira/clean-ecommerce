@@ -22,10 +22,10 @@ class ShowCartDetailsUsecase {
       return;
     }
 
-    _presenter.setInProgress(true);
+    _presenter.setIsLoading(true);
     Cart cart = await _repository.getCart() ?? Cart();
 
     _presenter.show(CartDetailsState(cart: cart));
-    _presenter.setInProgress(false);
+    _presenter.setIsLoading(false);
   }
 }
