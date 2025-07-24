@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class AppNavigator implements NavigatorGateway {
   final BuildContext context;
+  final Function? cartGoBackCallback;
 
-  AppNavigator(this.context);
+  AppNavigator(this.context, {this.cartGoBackCallback});
 
   @override
   void goCart({Cart? cart, Function? callback}) async {
@@ -18,8 +19,8 @@ class AppNavigator implements NavigatorGateway {
         builder: (context) => CartDetailsScreen(cart: cart),
       ),
     );
-    if (callback != null) {
-      callback();
+    if (cartGoBackCallback != null) {
+      cartGoBackCallback!();
     }
   }
 

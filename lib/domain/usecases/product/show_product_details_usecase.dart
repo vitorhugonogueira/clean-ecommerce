@@ -1,4 +1,5 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
@@ -21,36 +22,44 @@ class ShowProductDetailsUseCase {
     required this.dialog,
   });
 
-  Future<void> execute({required String productId}) async {
-    presenter.setIsLoading(true);
-
-    final result = await repository.getProductDetails(productId);
-
-    if (result.isFailure) {
-      dialog.showError(result.errorMessage!);
-      presenter.setIsLoading(false);
-      return;
+  Future<void> execute({required String productId, Product? product}) async {
+    if (product == null) {
+      presenter.setIsLoading(true);
+      product = await _getProductOrShowError(productId);
+      if (product == null) {
+        presenter.setIsLoading(false);
+        return;
+      }
     }
 
+    final state = ProductDetailsState(
+      product: product,
+      isValidatingAction: true,
+    );
+    presenter.show(state);
+    final cart = await cartRepository.getCart() ?? Cart();
+    final item = cart.getItem(productId);
+    final stock = await _getStockOrShowError(productId);
+    final stockAvailable = stock - (item?.quantity ?? 0);
+
+    presenter.show(
+      state.copyWith(stock: stockAvailable, isValidatingAction: false),
+    );
+  }
+
+  Future<Product?> _getProductOrShowError(String productId) async {
+    final result = await repository.getProductDetails(productId);
+    if (result.isFailure) {
+      dialog.showError(result.errorMessage!);
+    }
+    return result.content;
+  }
+
+  Future<int> _getStockOrShowError(String productId) async {
     final stockResult = await stockRepository.getStockAvailable(productId);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setIsLoading(false);
-      return;
     }
-    var currentStockAvailable = stockResult.content!;
-    final cart = await cartRepository.getCart() ?? Cart();
-    final item = cart.getItem(productId);
-    if (item != null) {
-      currentStockAvailable -= item.quantity;
-    }
-
-    presenter.show(
-      ProductDetailsState(
-        product: result.content,
-        stock: currentStockAvailable,
-        isLoading: false,
-      ),
-    );
+    return stockResult.content ?? 0;
   }
 }

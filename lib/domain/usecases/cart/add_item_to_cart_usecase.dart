@@ -5,7 +5,6 @@ import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
-import 'package:clean_ecommerce/domain/usecases/product/update_product_stock_details_usecase.dart';
 
 class AddItemToCartUseCase {
   final CartRepository cartRepository;
@@ -47,43 +46,26 @@ class AddItemToCartUseCase {
       return;
     }
 
-    final stockResult = await stockRepository.getStockAvailable(
-      productState.product!.id,
+    if (!continueShopping) {
+      navigator.goCart(cart: cart);
+      return;
+    }
+
+    dialog.notifySuccess('Item added to cart successfully');
+    final item = cart.getItem(productState.product!.id);
+    final stock = await _getStockOrShowError(productState.product!.id);
+    final stockAvailable = stock - (item?.quantity ?? 0);
+
+    presenter.show(
+      productState.copyWith(stock: stockAvailable, isValidatingAction: false),
     );
+  }
+
+  Future<int> _getStockOrShowError(String productId) async {
+    final stockResult = await stockRepository.getStockAvailable(productId);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
-      presenter.setIsValidatingAction(false);
-      return;
     }
-
-    var currentStockAvailable = stockResult.content!;
-    final item = cart.getItem(productState.product!.id);
-    if (item != null) {
-      currentStockAvailable -= item.quantity;
-    }
-
-    if (continueShopping) {
-      presenter.show(
-        productState.copyWith(
-          stock: currentStockAvailable,
-          isValidatingAction: false,
-        ),
-      );
-      dialog.notifySuccess('Item added to cart successfully');
-      return;
-    }
-
-    navigator.goCart(
-      cart: cart,
-      callback: () {
-        final updateUseCase = UpdateProductStockDetailsUseCase(
-          cartRepository: cartRepository,
-          stockRepository: stockRepository,
-          presenter: presenter,
-          dialog: dialog,
-        );
-        updateUseCase.execute(product: productState.product!);
-      },
-    );
+    return stockResult.content ?? 0;
   }
 }

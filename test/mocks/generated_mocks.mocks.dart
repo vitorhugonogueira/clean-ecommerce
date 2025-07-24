@@ -5,17 +5,19 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart' as _i9;
+import 'package:clean_ecommerce/domain/models/cart.dart' as _i5;
+import 'package:clean_ecommerce/domain/states/cart_details_state.dart' as _i11;
 import 'package:clean_ecommerce/domain/states/product_details_state.dart'
-    as _i7;
+    as _i9;
 import 'package:clean_ecommerce/domain/states/product_listing_state.dart'
-    as _i5;
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 import 'common/dialog_mock.dart' as _i2;
-import 'presenters/cart_details_presenter.dart' as _i8;
-import 'presenters/product_details_presenter.dart' as _i6;
-import 'presenters/product_listing_presenter.dart' as _i4;
+import 'common/navigator_mock.dart' as _i4;
+import 'presenters/cart_details_presenter.dart' as _i10;
+import 'presenters/product_details_presenter.dart' as _i8;
+import 'presenters/product_listing_presenter.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -72,17 +74,44 @@ class MockDialogMockito extends _i1.Mock implements _i2.DialogMockito {
   );
 }
 
+/// A class which mocks [NavigatorMockito].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNavigatorMockito extends _i1.Mock implements _i4.NavigatorMockito {
+  MockNavigatorMockito() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void goCart({_i5.Cart? cart, Function? callback}) => super.noSuchMethod(
+    Invocation.method(#goCart, [], {#cart: cart, #callback: callback}),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void goDetails(String? id) => super.noSuchMethod(
+    Invocation.method(#goDetails, [id]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void goHome() => super.noSuchMethod(
+    Invocation.method(#goHome, []),
+    returnValueForMissingStub: null,
+  );
+}
+
 /// A class which mocks [ProductListingPresenterMockito].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductListingPresenterMockito extends _i1.Mock
-    implements _i4.ProductListingPresenterMockito {
+    implements _i6.ProductListingPresenterMockito {
   MockProductListingPresenterMockito() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  void show(_i5.ProductListingState? state) => super.noSuchMethod(
+  void show(_i7.ProductListingState? state) => super.noSuchMethod(
     Invocation.method(#show, [state]),
     returnValueForMissingStub: null,
   );
@@ -98,13 +127,13 @@ class MockProductListingPresenterMockito extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductDetailsPresenterMockito extends _i1.Mock
-    implements _i6.ProductDetailsPresenterMockito {
+    implements _i8.ProductDetailsPresenterMockito {
   MockProductDetailsPresenterMockito() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  void show(_i7.ProductDetailsState? state) => super.noSuchMethod(
+  void show(_i9.ProductDetailsState? state) => super.noSuchMethod(
     Invocation.method(#show, [state]),
     returnValueForMissingStub: null,
   );
@@ -126,13 +155,13 @@ class MockProductDetailsPresenterMockito extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCartDetailsPresenterMockito extends _i1.Mock
-    implements _i8.CartDetailsPresenterMockito {
+    implements _i10.CartDetailsPresenterMockito {
   MockCartDetailsPresenterMockito() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  void show(_i9.CartDetailsState? state) => super.noSuchMethod(
+  void show(_i11.CartDetailsState? state) => super.noSuchMethod(
     Invocation.method(#show, [state]),
     returnValueForMissingStub: null,
   );

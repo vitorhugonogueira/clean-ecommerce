@@ -65,12 +65,18 @@ void main() {
           dialog.showError('Failure on getting stock information.'),
         ).called(1);
       });
-      test('should not show product details', () {
-        verifyNever(presenter.show(any));
-      });
-      test('should inform progress', () {
-        verify(presenter.setIsLoading(true)).called(1);
-        verify(presenter.setIsLoading(false)).called(1);
+      test('should keep product disabled', () {
+        verify(
+          presenter.show(
+            argThat(
+              isA<ProductDetailsState>().having(
+                (obj) => obj.isDisabled,
+                'isDisabled',
+                true,
+              ),
+            ),
+          ),
+        ).called(2);
       });
     });
     group('Success - [current cart DO NOT contains that product]', () {

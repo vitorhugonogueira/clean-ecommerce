@@ -11,7 +11,6 @@ import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.
 import 'package:clean_ecommerce/ui/product/details/product_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
-import 'package:clean_ecommerce/domain/usecases/product/update_product_stock_details_usecase.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final String productId;
@@ -23,7 +22,6 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  late UpdateProductStockDetailsUseCase _updateDetailsUseCase;
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddItemToCartUseCase _addItemToCartUseCase;
   late AppNavigator _navigator;
@@ -38,7 +36,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final cartDataSource = CartDataSource();
     final stockDataSource = StockDataSource();
     final dialog = EcommerceDialog(context);
-    _navigator = AppNavigator(context);
+    _navigator = AppNavigator(
+      context,
+      cartGoBackCallback: _fetchProductDetails,
+    );
 
     final presenter = ProductDetailsScreenPresenter(
       initialState: _state,
@@ -64,18 +65,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       presenter: presenter,
       stockRepository: stockDataSource,
     );
-    _updateDetailsUseCase = UpdateProductStockDetailsUseCase(
-      cartRepository: cartDataSource,
-      stockRepository: stockDataSource,
-      presenter: presenter,
-      dialog: dialog,
-    );
 
     _fetchProductDetails();
   }
 
   _fetchProductDetails() {
-    _showDetailsUseCase.execute(productId: widget.productId);
+    _showDetailsUseCase.execute(
+      productId: widget.productId,
+      product: _state.product,
+    );
   }
 
   _add({required bool continueShopping}) {
@@ -98,14 +96,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return CleanScaffold(
       title: title,
-      callbackCartAction: () {
-        if (_state.product != null) {
-          _updateDetailsUseCase.execute(product: _state.product!);
-          return;
-        }
-        _fetchProductDetails();
-      },
-      navigator: AppNavigator(context),
+      navigator: _navigator,
       body: _buildBodyContent(),
     );
   }
