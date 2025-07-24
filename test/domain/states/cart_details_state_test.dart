@@ -24,5 +24,32 @@ void main() {
         expect(state.cart!.totalLabel, '\$ 176.67');
       });
     });
+    group('Copy with', () {
+      final state = CartDetailsState(
+        cart: Cart(items: [Item(product: product1, quantity: 3)]),
+      );
+      final updated = state.copyWith(
+        cart: Cart(items: [Item(product: product2, quantity: 2)]),
+      );
+      test('should copy properties rightly', () {
+        expect(updated.cart, isNot(state.cart));
+        expect(updated.cart!.items.length, 1);
+        expect(updated.cart!.items[0].product.id, product2.id);
+        expect(updated.cart!.items[0].quantity, 2);
+        expect(updated.cart!.totalLabel, '\$ 37.80');
+      });
+    });
+    group('Copy with - just isValidatingAction', () {
+      final state = CartDetailsState(
+        cart: Cart(items: [Item(product: product1, quantity: 3)]),
+      );
+      final updated = state.copyWith(isValidatingAction: true);
+      test('should copy properties rightly', () {
+        expect(updated.cart!.items.length, 1);
+        expect(updated.cart!.items[0].product.id, product1.id);
+        expect(updated.cart!.items[0].quantity, 3);
+        expect(updated.cart!.totalLabel, '\$ 176.67');
+      });
+    });
   });
 }
