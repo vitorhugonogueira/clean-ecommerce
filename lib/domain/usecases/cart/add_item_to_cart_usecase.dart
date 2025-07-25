@@ -37,8 +37,27 @@ class AddItemToCartUseCase {
 
     presenter.setIsValidatingAction(true);
     var cart = await cartRepository.getCart() ?? Cart();
-    cart = cart.addItem(productState.product!, quantity);
+    final item = cart.getItem(productState.product!.id);
 
+    final stockResult = await stockRepository.getStockAvailable(
+      productState.product!.id,
+    );
+    if (stockResult.isFailure) {
+      dialog.showError(stockResult.errorMessage!);
+      presenter.setIsValidatingAction(false);
+      return;
+    }
+
+    final stock = stockResult.content!;
+    final stockAvailable = stock - (item?.quantity ?? 0);
+
+    if (stockAvailable < quantity) {
+      dialog.showError('Insufficient stock available.');
+      presenter.setIsValidatingAction(false);
+      return;
+    }
+
+    cart = cart.addItem(productState.product!, quantity);
     final result = await cartRepository.saveCart(cart);
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
@@ -52,20 +71,12 @@ class AddItemToCartUseCase {
     }
 
     dialog.notifySuccess('Item added to cart successfully');
-    final item = cart.getItem(productState.product!.id);
-    final stock = await _getStockOrShowError(productState.product!.id);
-    final stockAvailable = stock - (item?.quantity ?? 0);
 
     presenter.show(
-      productState.copyWith(stock: stockAvailable, isValidatingAction: false),
+      productState.copyWith(
+        stock: stockAvailable - quantity,
+        isValidatingAction: false,
+      ),
     );
-  }
-
-  Future<int> _getStockOrShowError(String productId) async {
-    final stockResult = await stockRepository.getStockAvailable(productId);
-    if (stockResult.isFailure) {
-      dialog.showError(stockResult.errorMessage!);
-    }
-    return stockResult.content ?? 0;
   }
 }

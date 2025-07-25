@@ -83,8 +83,8 @@ class MockNavigatorMockito extends _i1.Mock implements _i4.NavigatorMockito {
   }
 
   @override
-  void goCart({_i5.Cart? cart, Function? callback}) => super.noSuchMethod(
-    Invocation.method(#goCart, [], {#cart: cart, #callback: callback}),
+  void goCart({_i5.Cart? cart}) => super.noSuchMethod(
+    Invocation.method(#goCart, [], {#cart: cart}),
     returnValueForMissingStub: null,
   );
 
