@@ -14,17 +14,17 @@ class ShowProductsUseCase {
   });
 
   Future<void> execute({int page = 1, int pageSize = 15}) async {
-    presenter.setInProgress(true);
+    presenter.setIsLoading(true);
 
     final result = await repository.getProducts(page, pageSize);
 
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
-      presenter.setInProgress(false);
+      presenter.setIsLoading(false);
       return;
     }
 
-    presenter.show(result.content!);
-    presenter.setInProgress(false);
+    presenter.showProducts(result.content!);
+    presenter.setIsLoading(false);
   }
 }

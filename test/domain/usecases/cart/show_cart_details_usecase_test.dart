@@ -1,6 +1,5 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -24,15 +23,11 @@ void main() {
       usecase.execute();
       test('Should present that cart', () {
         verify(
-          presenter.show(
+          presenter.showCart(
             argThat(
-              isA<CartDetailsState>()
-                  .having(
-                    (obj) => obj.cart!.items[0].product.id,
-                    'product',
-                    '2',
-                  )
-                  .having((obj) => obj.cart!.items[0].quantity, 'quantity', 11),
+              isA<Cart>()
+                  .having((obj) => obj.items[0].product.id, 'product', '2')
+                  .having((obj) => obj.items[0].quantity, 'quantity', 11),
             ),
           ),
         );
@@ -55,15 +50,11 @@ void main() {
       usecase.execute();
       test('Should present the cart provided by repository', () {
         verify(
-          presenter.show(
+          presenter.showCart(
             argThat(
-              isA<CartDetailsState>()
-                  .having(
-                    (obj) => obj.cart!.items[0].product.id,
-                    'product',
-                    '2',
-                  )
-                  .having((obj) => obj.cart!.items[0].quantity, 'quantity', 7),
+              isA<Cart>()
+                  .having((obj) => obj.items[0].product.id, 'product', '2')
+                  .having((obj) => obj.items[0].quantity, 'quantity', 7),
             ),
           ),
         );
@@ -86,13 +77,9 @@ void main() {
       usecase.execute();
       test('Should present a new clean cart', () {
         verify(
-          presenter.show(
+          presenter.showCart(
             argThat(
-              isA<CartDetailsState>().having(
-                (obj) => obj.cart!.items.length,
-                'cartLenght',
-                0,
-              ),
+              isA<Cart>().having((obj) => obj.items.length, 'cartLenght', 0),
             ),
           ),
         );

@@ -2,7 +2,7 @@ import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/models/product.dart';
-import 'package:clean_ecommerce/domain/states/product_details_state.dart';
+import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
@@ -25,8 +25,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddProductToCartUseCase _addItemToCartUseCase;
   late AppNavigator _navigator;
-
-  ProductDetailsState _state = ProductDetailsState();
+  late ProductDetailsState _state;
 
   @override
   void initState() {
@@ -40,9 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       context,
       cartGoBackCallback: _fetchProductDetails,
     );
-
     final presenter = ProductDetailsScreenPresenter(
-      initialState: _state,
       onStateChanged: (newState) {
         if (!mounted) return;
         setState(() {
@@ -78,7 +75,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   _add({required bool continueShopping}) {
     _addItemToCartUseCase.execute(
-      productState: _state,
+      _state.product!,
       quantity: 1,
       continueShopping: continueShopping,
     );

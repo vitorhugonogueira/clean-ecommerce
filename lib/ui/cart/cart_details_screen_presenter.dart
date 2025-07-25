@@ -1,5 +1,6 @@
+import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
+import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 
 class CartDetailsScreenPresenter implements CartDetailsPresenter {
   final Function(CartDetailsState) onStateChanged;
@@ -10,7 +11,6 @@ class CartDetailsScreenPresenter implements CartDetailsPresenter {
     required CartDetailsState initialState,
   }) : _state = initialState;
 
-  @override
   void show(CartDetailsState state) {
     _state = state;
     onStateChanged(state);
@@ -24,5 +24,10 @@ class CartDetailsScreenPresenter implements CartDetailsPresenter {
   @override
   void setIsValidatingAction(bool inProgress) {
     show(_state.copyWith(isValidatingAction: inProgress));
+  }
+
+  @override
+  void showCart(Cart cart) {
+    show(_state.copyWith(cart: cart));
   }
 }

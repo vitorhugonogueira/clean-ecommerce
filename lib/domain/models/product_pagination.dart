@@ -1,12 +1,12 @@
-import '../models/product.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
 
-class ProductListingState {
+class ProductPagination {
   final List<Product> products;
   final int page;
   final int totalOfPages;
   final int pageSize;
 
-  const ProductListingState({
+  const ProductPagination({
     this.products = const [],
     this.page = 1,
     this.totalOfPages = 1,

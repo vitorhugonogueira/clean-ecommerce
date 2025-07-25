@@ -1,7 +1,7 @@
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
+import 'package:clean_ecommerce/domain/models/cart.dart';
 
 abstract class CartDetailsPresenter {
-  void show(CartDetailsState state);
+  void showCart(Cart cart);
   void setIsLoading(bool inProgress);
   void setIsValidatingAction(bool inProgress);
 }

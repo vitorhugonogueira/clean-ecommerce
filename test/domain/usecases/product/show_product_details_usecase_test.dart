@@ -1,6 +1,6 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/states/product_details_state.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -36,11 +36,14 @@ void main() {
         ).called(1);
       });
       test('should not show product details', () {
-        verifyNever(presenter.show(any));
+        verifyNever(presenter.showProduct(any));
       });
       test('should inform progress', () {
         verify(presenter.setIsLoading(true)).called(1);
         verify(presenter.setIsLoading(false)).called(1);
+      });
+      test('should not inform validation progress', () {
+        verifyNever(presenter.setIsValidatingAction(any));
       });
     });
 
@@ -65,19 +68,6 @@ void main() {
           dialog.showError('Failure on getting stock information.'),
         ).called(1);
       });
-      test('should keep product disabled', () {
-        verify(
-          presenter.show(
-            argThat(
-              isA<ProductDetailsState>().having(
-                (obj) => obj.isDisabled,
-                'isDisabled',
-                true,
-              ),
-            ),
-          ),
-        ).called(2);
-      });
     });
     group('Success - [current cart DO NOT contains that product]', () {
       final dialog = MockDialogMockito();
@@ -98,15 +88,16 @@ void main() {
       });
       test('should present product details', () {
         verify(
-          presenter.show(
-            argThat(
-              isA<ProductDetailsState>()
-                  .having((obj) => obj.product?.id, 'id', '1')
-                  .having((obj) => obj.stock, 'stock', 5)
-                  .having((obj) => obj.isLoading, 'isLoading', false),
-            ),
+          presenter.showProduct(
+            argThat(isA<Product>().having((obj) => obj.id, 'id', '1')),
           ),
         ).called(1);
+      });
+      test('should present stock rightly', () {
+        verify(presenter.showStock(5)).called(1);
+      });
+      test('should finish validation process', () {
+        verify(presenter.setIsValidatingAction(false)).called(1);
       });
       test('should inform progress', () {
         verify(presenter.setIsLoading(true)).called(1);
@@ -129,21 +120,22 @@ void main() {
       test('should not show any error', () {
         verifyNever(dialog.showError(any));
       });
+      test('should present product details', () {
+        verify(
+          presenter.showProduct(
+            argThat(isA<Product>().having((obj) => obj.id, 'id', '1')),
+          ),
+        ).called(1);
+      });
       test(
-        'should present product details - WITH STOCK UPDATED BY CURRENT CART QUANTITY',
+        'should present stock rightly (UPDATED BY CURRENT CART QUANTITY)',
         () {
-          verify(
-            presenter.show(
-              argThat(
-                isA<ProductDetailsState>()
-                    .having((obj) => obj.product?.id, 'id', '1')
-                    .having((obj) => obj.stock, 'stock', 2)
-                    .having((obj) => obj.isLoading, 'isLoading', false),
-              ),
-            ),
-          ).called(1);
+          verify(presenter.showStock(2)).called(1);
         },
       );
+      test('should finish validation process', () {
+        verify(presenter.setIsValidatingAction(false)).called(1);
+      });
       test('should inform progress', () {
         verify(presenter.setIsLoading(true)).called(1);
       });

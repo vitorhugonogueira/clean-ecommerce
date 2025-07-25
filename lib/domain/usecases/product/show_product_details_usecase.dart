@@ -5,7 +5,6 @@ import 'package:clean_ecommerce/domain/repositories/product_details_repository.d
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
-import 'package:clean_ecommerce/domain/states/product_details_state.dart';
 
 class ShowProductDetailsUseCase {
   final ProductDetailsRepository repository;
@@ -23,28 +22,26 @@ class ShowProductDetailsUseCase {
   });
 
   Future<void> execute({required String productId, Product? product}) async {
-    if (product == null) {
+    Product? loadedProduct = product;
+    if (loadedProduct == null) {
       presenter.setIsLoading(true);
-      product = await _getProductOrShowError(productId);
-      if (product == null) {
-        presenter.setIsLoading(false);
+      loadedProduct = await _getProductOrShowError(productId);
+      presenter.setIsLoading(false);
+      if (loadedProduct == null) {
         return;
       }
     }
 
-    final state = ProductDetailsState(
-      product: product,
-      isValidatingAction: true,
-    );
-    presenter.show(state);
+    presenter.showProduct(loadedProduct);
+    presenter.setIsValidatingAction(true);
+
     final cart = await cartRepository.getCart() ?? Cart();
     final item = cart.getItem(productId);
     final stock = await _getStockOrShowError(productId);
     final stockAvailable = stock - (item?.quantity ?? 0);
 
-    presenter.show(
-      state.copyWith(stock: stockAvailable, isValidatingAction: false),
-    );
+    presenter.showStock(stockAvailable);
+    presenter.setIsValidatingAction(false);
   }
 
   Future<Product?> _getProductOrShowError(String productId) async {

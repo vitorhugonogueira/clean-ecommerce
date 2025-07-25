@@ -1,6 +1,5 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -37,7 +36,7 @@ void main() {
         ).called(1);
       });
       test('Should NOT present cart details state', () {
-        verifyNever(presenter.show(any));
+        verifyNever(presenter.showCart(any));
       });
     });
     group('Success on saving', () {
@@ -62,16 +61,12 @@ void main() {
       });
       test('Should present updated cart rightly', () {
         verify(
-          presenter.show(
+          presenter.showCart(
             argThat(
-              isA<CartDetailsState>()
-                  .having((obj) => obj.cart!.items.length, 'itemsLenght', 1)
-                  .having(
-                    (obj) => obj.cart!.items[0].product.id,
-                    'product',
-                    '2',
-                  )
-                  .having((obj) => obj.cart!.items[0].quantity, 'quantity', 4),
+              isA<Cart>()
+                  .having((obj) => obj.items.length, 'itemsLenght', 1)
+                  .having((obj) => obj.items[0].product.id, 'product', '2')
+                  .having((obj) => obj.items[0].quantity, 'quantity', 4),
             ),
           ),
         );

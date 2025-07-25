@@ -6,11 +6,8 @@
 import 'dart:async' as _i3;
 
 import 'package:clean_ecommerce/domain/models/cart.dart' as _i5;
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart' as _i11;
-import 'package:clean_ecommerce/domain/states/product_details_state.dart'
-    as _i9;
-import 'package:clean_ecommerce/domain/states/product_listing_state.dart'
-    as _i7;
+import 'package:clean_ecommerce/domain/models/product.dart' as _i9;
+import 'package:clean_ecommerce/domain/models/product_pagination.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 import 'common/dialog_mock.dart' as _i2;
@@ -111,14 +108,14 @@ class MockProductListingPresenterMockito extends _i1.Mock
   }
 
   @override
-  void show(_i7.ProductListingState? state) => super.noSuchMethod(
-    Invocation.method(#show, [state]),
+  void showProducts(_i7.ProductPagination? pagination) => super.noSuchMethod(
+    Invocation.method(#showProducts, [pagination]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void setInProgress(bool? value) => super.noSuchMethod(
-    Invocation.method(#setInProgress, [value]),
+  void setIsLoading(bool? value) => super.noSuchMethod(
+    Invocation.method(#setIsLoading, [value]),
     returnValueForMissingStub: null,
   );
 }
@@ -133,8 +130,14 @@ class MockProductDetailsPresenterMockito extends _i1.Mock
   }
 
   @override
-  void show(_i9.ProductDetailsState? state) => super.noSuchMethod(
-    Invocation.method(#show, [state]),
+  void showProduct(_i9.Product? product) => super.noSuchMethod(
+    Invocation.method(#showProduct, [product]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void showStock(int? stock) => super.noSuchMethod(
+    Invocation.method(#showStock, [stock]),
     returnValueForMissingStub: null,
   );
 
@@ -161,8 +164,8 @@ class MockCartDetailsPresenterMockito extends _i1.Mock
   }
 
   @override
-  void show(_i11.CartDetailsState? state) => super.noSuchMethod(
-    Invocation.method(#show, [state]),
+  void showCart(_i5.Cart? cart) => super.noSuchMethod(
+    Invocation.method(#showCart, [cart]),
     returnValueForMissingStub: null,
   );
 

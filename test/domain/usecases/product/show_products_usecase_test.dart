@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/states/product_listing_state.dart';
+import 'package:clean_ecommerce/domain/models/product_pagination.dart';
 
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,13 +30,13 @@ void main() {
         ).called(1);
       });
       test('should not show any products', () {
-        verifyNever(presenter.show(any));
+        verifyNever(presenter.showProducts(any));
       });
     });
     group('SUCCESS - default page', () {
       final dialog = MockDialogMockito();
       final presenter = MockProductListingPresenterMockito();
-      final data = ProductListingState(products: [product1, product2]);
+      final data = ProductPagination(products: [product1, product2]);
       final usecase = ShowProductsUseCase(
         dialog: dialog,
         presenter: presenter,
@@ -48,7 +48,7 @@ void main() {
         verifyNever(dialog.showError(any));
       });
       test('should inform the product list', () {
-        verify(presenter.show(data)).called(1);
+        verify(presenter.showProducts(data)).called(1);
       });
     });
   });

@@ -1,6 +1,5 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -32,7 +31,7 @@ void main() {
         verify(dialog.showError('Item not found.')).called(1);
       });
       test('Should NOT present cart', () {
-        verifyNever(presenter.show(any));
+        verifyNever(presenter.showCart(any));
       });
       test('Should NOT present validation progress', () {
         verifyNever(presenter.setIsValidatingAction(any));
@@ -64,7 +63,7 @@ void main() {
         ).called(1);
       });
       test('Should NOT present cart', () {
-        verifyNever(presenter.show(any));
+        verifyNever(presenter.showCart(any));
       });
     });
     group('Product OK, cart repository OK', () {
@@ -89,17 +88,17 @@ void main() {
       });
       test('Should present cart with item decreased', () {
         verify(
-          presenter.show(
+          presenter.showCart(
             argThat(
-              isA<CartDetailsState>()
-                  .having((obj) => obj.cart!.items.length, 'itemsLenght', 2)
+              isA<Cart>()
+                  .having((obj) => obj.items.length, 'itemsLenght', 2)
                   .having(
-                    (obj) => obj.cart!.items[1].quantity,
+                    (obj) => obj.items[1].quantity,
                     'increasedQuantity',
                     3,
                   )
                   .having(
-                    (obj) => obj.cart!.items[0].quantity,
+                    (obj) => obj.items[0].quantity,
                     'otherProductQuantity',
                     2,
                   ),

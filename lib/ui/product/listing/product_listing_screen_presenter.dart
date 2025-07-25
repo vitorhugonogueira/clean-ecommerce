@@ -1,31 +1,27 @@
+import 'package:clean_ecommerce/domain/models/product_pagination.dart';
 import 'package:clean_ecommerce/domain/presenters/product_listing_presenter.dart';
-import 'package:clean_ecommerce/domain/states/product_listing_state.dart';
+import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 
 class ProductListingScreenPresenter implements ProductListingPresenter {
   final Function(ProductListingState) onStateChanged;
-  final Function(bool) onInProgressChanged;
-  ProductListingState _state;
-  bool _inProgress = false;
+  late ProductListingState _state;
 
-  ProductListingScreenPresenter({
-    required this.onStateChanged,
-    required this.onInProgressChanged,
-    required ProductListingState initialState,
-  }) : _state = initialState;
+  ProductListingScreenPresenter({required this.onStateChanged}) {
+    _show(ProductListingState());
+  }
 
-  @override
-  void show(ProductListingState state) {
+  _show(ProductListingState state) {
     _state = state;
     onStateChanged(state);
   }
 
   @override
-  void setInProgress(bool inProgress) {
-    _inProgress = inProgress;
-    onInProgressChanged(inProgress);
+  void setIsLoading(bool value) {
+    _show(_state.copyWith(isLoading: value));
   }
 
-  ProductListingState? get state => _state;
-
-  bool get inProgress => _inProgress;
+  @override
+  void showProducts(ProductPagination pagination) {
+    _show(_state.copyWith(pagination: pagination));
+  }
 }

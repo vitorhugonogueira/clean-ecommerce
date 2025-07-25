@@ -3,7 +3,6 @@ import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 
 class IncreaseCartItemUsecase {
   final CartRepository cartRepository;
@@ -51,6 +50,6 @@ class IncreaseCartItemUsecase {
     }
 
     presenter.setIsValidatingAction(false);
-    presenter.show(CartDetailsState(cart: updatedCart));
+    presenter.showCart(updatedCart);
   }
 }

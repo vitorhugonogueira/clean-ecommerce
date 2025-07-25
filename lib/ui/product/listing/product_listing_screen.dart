@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/data/data_sources/product_listing_data_source.dart';
-import 'package:clean_ecommerce/domain/states/product_listing_state.dart';
+import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
@@ -20,7 +20,6 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   late ShowProductsUseCase _useCase;
   late AppNavigator _navigator;
   ProductListingState _state = ProductListingState();
-  bool _inProgress = false;
 
   @override
   void initState() {
@@ -29,15 +28,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     final repository = ProductListingDataSource();
     final dialog = EcommerceDialog(context);
     final presenter = ProductListingScreenPresenter(
-      initialState: _state,
       onStateChanged: (state) {
         setState(() {
           _state = state;
-        });
-      },
-      onInProgressChanged: (inProgress) {
-        setState(() {
-          _inProgress = inProgress;
         });
       },
     );
@@ -51,7 +44,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   void _fetchProducts() async {
-    if (_inProgress) {
+    if (_state.isLoading) {
       return;
     }
     _useCase.execute();
@@ -65,7 +58,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_state.products.isNotEmpty)
+            if (_state.pagination.products.isNotEmpty)
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -78,9 +71,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                           mainAxisSpacing: 8.0,
                           childAspectRatio: 0.9,
                         ),
-                    itemCount: _state.products.length,
+                    itemCount: _state.pagination.products.length,
                     itemBuilder: (context, index) {
-                      final product = _state.products[index];
+                      final product = _state.pagination.products[index];
                       return ProductCard(
                         product: product,
                         onTap: _navigator.goDetails,
@@ -89,7 +82,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                   ),
                 ),
               ),
-            if (_state.products.isEmpty && !_inProgress)
+            if (_state.pagination.products.isEmpty && !_state.isLoading)
               Expanded(
                 child: Center(
                   child: Column(
@@ -100,13 +93,13 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       const SizedBox(height: 16),
                       ProductListingReloadButton(
                         onPressed: _fetchProducts,
-                        inProgress: _inProgress,
+                        inProgress: _state.isLoading,
                       ),
                     ],
                   ),
                 ),
               ),
-            if (_inProgress && _state.products.isEmpty)
+            if (_state.isLoading && _state.pagination.products.isEmpty)
               const Expanded(child: Center(child: CircularProgressIndicator())),
           ],
         ),

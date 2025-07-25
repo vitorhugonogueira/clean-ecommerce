@@ -2,7 +2,7 @@ import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
+import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';

@@ -1,7 +1,6 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 
 class ShowCartDetailsUsecase {
   final CartDetailsPresenter _presenter;
@@ -18,14 +17,14 @@ class ShowCartDetailsUsecase {
 
   Future<void> execute() async {
     if (_initialCart != null) {
-      _presenter.show(CartDetailsState(cart: _initialCart));
+      _presenter.showCart(_initialCart);
       return;
     }
 
     _presenter.setIsLoading(true);
     Cart cart = await _repository.getCart() ?? Cart();
 
-    _presenter.show(CartDetailsState(cart: cart));
+    _presenter.showCart(cart);
     _presenter.setIsLoading(false);
   }
 }

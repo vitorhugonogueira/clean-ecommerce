@@ -2,7 +2,6 @@ import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
-import 'package:clean_ecommerce/domain/states/cart_details_state.dart';
 
 class RemoveItemToCartUseCase {
   final CartRepository cartRepository;
@@ -24,6 +23,6 @@ class RemoveItemToCartUseCase {
       return;
     }
 
-    presenter.show(CartDetailsState(cart: updatedCart));
+    presenter.showCart(updatedCart);
   }
 }

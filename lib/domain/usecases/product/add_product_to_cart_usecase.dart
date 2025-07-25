@@ -1,10 +1,10 @@
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
 import 'package:clean_ecommerce/domain/gateways/navigator_gateway.dart';
 import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
-import 'package:clean_ecommerce/domain/states/product_details_state.dart';
 
 class AddProductToCartUseCase {
   final CartRepository cartRepository;
@@ -21,15 +21,11 @@ class AddProductToCartUseCase {
     required this.stockRepository,
   });
 
-  Future<void> execute({
-    required ProductDetailsState productState,
+  Future<void> execute(
+    Product product, {
     int quantity = 1,
     bool continueShopping = true,
   }) async {
-    if (productState.product == null) {
-      dialog.showError('Product not found.');
-      return;
-    }
     if (quantity <= 0) {
       dialog.showError('Quantity must be greater than zero.');
       return;
@@ -37,11 +33,9 @@ class AddProductToCartUseCase {
 
     presenter.setIsValidatingAction(true);
     var cart = await cartRepository.getCart() ?? Cart();
-    final item = cart.getItem(productState.product!.id);
+    final item = cart.getItem(product.id);
 
-    final stockResult = await stockRepository.getStockAvailable(
-      productState.product!.id,
-    );
+    final stockResult = await stockRepository.getStockAvailable(product.id);
     if (stockResult.isFailure) {
       dialog.showError(stockResult.errorMessage!);
       presenter.setIsValidatingAction(false);
@@ -57,7 +51,7 @@ class AddProductToCartUseCase {
       return;
     }
 
-    cart = cart.addItem(productState.product!, quantity);
+    cart = cart.addItem(product, quantity);
     final result = await cartRepository.saveCart(cart);
     if (result.isFailure) {
       dialog.showError(result.errorMessage!);
@@ -71,12 +65,7 @@ class AddProductToCartUseCase {
     }
 
     dialog.notifySuccess('Item added to cart successfully');
-
-    presenter.show(
-      productState.copyWith(
-        stock: stockAvailable - quantity,
-        isValidatingAction: false,
-      ),
-    );
+    presenter.showStock(stockAvailable - quantity);
+    presenter.setIsValidatingAction(false);
   }
 }

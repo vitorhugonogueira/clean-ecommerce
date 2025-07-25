@@ -1,6 +1,6 @@
-import '../states/product_listing_state.dart';
+import 'package:clean_ecommerce/domain/models/product_pagination.dart';
 
 abstract class ProductListingPresenter {
-  void show(ProductListingState state);
-  void setInProgress(bool value);
+  void showProducts(ProductPagination pagination);
+  void setIsLoading(bool value);
 }
