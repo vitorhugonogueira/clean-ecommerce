@@ -1,7 +1,7 @@
 import 'package:clean_ecommerce/ui/common/widgets/card/simple_card.dart';
 import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
 import 'package:flutter/material.dart';
-import 'package:clean_ecommerce/domain/models/product.dart'; // Adjust import path if needed
+import 'package:clean_ecommerce/domain/entities/product.dart'; // Adjust import path if needed
 
 class ProductCard extends StatelessWidget {
   final Product product;

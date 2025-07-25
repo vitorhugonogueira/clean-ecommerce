@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';

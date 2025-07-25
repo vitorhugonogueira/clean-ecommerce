@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:clean_ecommerce/data/mappers/cart_mapper.dart';
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 class CartDataSource implements CartRepository {
   static const String _cartStorageKey = 'cart_data';

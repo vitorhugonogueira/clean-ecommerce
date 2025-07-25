@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/data/data_config.dart';
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductImage extends StatelessWidget {

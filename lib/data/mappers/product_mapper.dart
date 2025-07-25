@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 
 Product getProductFromMap(Map<String, dynamic> json) {
   return Product(

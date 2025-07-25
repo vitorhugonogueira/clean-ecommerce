@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/product_pagination.dart';
+import 'package:clean_ecommerce/domain/entities/product_pagination.dart';
 import 'package:clean_ecommerce/domain/presenters/product_listing_presenter.dart';
 import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 

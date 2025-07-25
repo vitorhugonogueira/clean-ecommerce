@@ -1,6 +1,6 @@
-import 'package:clean_ecommerce/domain/models/product_pagination.dart';
+import 'package:clean_ecommerce/domain/entities/product_pagination.dart';
 import 'package:clean_ecommerce/domain/repositories/product_listing_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 class ProductListingDataSourceMock extends ProductListingRepository {
   final Result<ProductPagination> _result;

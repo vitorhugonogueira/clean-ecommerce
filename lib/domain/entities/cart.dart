@@ -1,5 +1,5 @@
-import 'package:clean_ecommerce/domain/models/item.dart';
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:collection/collection.dart';
 
 class Cart {

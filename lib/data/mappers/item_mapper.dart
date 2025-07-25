@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/data/mappers/product_mapper.dart';
-import 'package:clean_ecommerce/domain/models/item.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 
 Item getItemFromMap(Map<String, dynamic> map) {
   return Item(

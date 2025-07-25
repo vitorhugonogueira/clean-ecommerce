@@ -1,8 +1,8 @@
 import 'package:clean_ecommerce/data/data_config.dart';
 import 'package:clean_ecommerce/data/mappers/product_mapper.dart';
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';

@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 
 final product1 = Product(
   id: '1',

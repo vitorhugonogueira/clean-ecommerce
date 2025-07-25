@@ -1,6 +1,6 @@
 import 'package:clean_ecommerce/data/mappers/item_mapper.dart';
-import 'package:clean_ecommerce/domain/models/cart.dart';
-import 'package:clean_ecommerce/domain/models/item.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 
 Cart getCartFromMap(Map<String, dynamic> map) {
   final List<dynamic>? rawItemsList = map['items'] as List<dynamic>?;

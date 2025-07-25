@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 

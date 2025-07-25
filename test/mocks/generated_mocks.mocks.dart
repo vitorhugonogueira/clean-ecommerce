@@ -5,9 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:clean_ecommerce/domain/models/cart.dart' as _i5;
-import 'package:clean_ecommerce/domain/models/product.dart' as _i9;
-import 'package:clean_ecommerce/domain/models/product_pagination.dart' as _i7;
+import 'package:clean_ecommerce/domain/entities/cart.dart' as _i5;
+import 'package:clean_ecommerce/domain/entities/product.dart' as _i9;
+import 'package:clean_ecommerce/domain/entities/product_pagination.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 import 'common/dialog_mock.dart' as _i2;

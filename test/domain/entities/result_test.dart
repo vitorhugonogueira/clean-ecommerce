@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/models/product_mock.dart';

@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 

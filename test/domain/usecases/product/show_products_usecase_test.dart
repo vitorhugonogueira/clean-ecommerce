@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/product_pagination.dart';
+import 'package:clean_ecommerce/domain/entities/product_pagination.dart';
 
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';

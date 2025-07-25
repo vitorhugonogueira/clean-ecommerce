@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/domain/gateways/navigator_gateway.dart';
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/ui/cart/cart_details_screen.dart';
 import 'package:clean_ecommerce/ui/product/details/product_details_screen.dart';
 import 'package:flutter/material.dart';

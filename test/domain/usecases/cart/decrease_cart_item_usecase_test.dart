@@ -1,5 +1,5 @@
-import 'package:clean_ecommerce/domain/models/cart.dart';
-import 'package:clean_ecommerce/domain/models/item.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

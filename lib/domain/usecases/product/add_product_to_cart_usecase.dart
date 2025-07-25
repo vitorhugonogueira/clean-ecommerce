@@ -1,7 +1,7 @@
 import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
 import 'package:clean_ecommerce/domain/gateways/navigator_gateway.dart';
-import 'package:clean_ecommerce/domain/models/cart.dart';
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';

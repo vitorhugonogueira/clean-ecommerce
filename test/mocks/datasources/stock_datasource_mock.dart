@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 class StockDataSourceMock extends StockRepository {
   final Result<int> _result;

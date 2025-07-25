@@ -1,6 +1,6 @@
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 class CartDataSourceMock extends CartRepository {
   final Result<bool> _savingResult;

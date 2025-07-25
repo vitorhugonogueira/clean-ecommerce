@@ -1,4 +1,4 @@
-import 'package:clean_ecommerce/domain/models/cart.dart';
+import 'package:clean_ecommerce/domain/entities/cart.dart';
 
 abstract class NavigatorGateway {
   void goCart({Cart? cart});

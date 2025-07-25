@@ -1,6 +1,6 @@
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 class ProductDetailsDataSourceMock extends ProductDetailsRepository {
   final Result<Product> _result;

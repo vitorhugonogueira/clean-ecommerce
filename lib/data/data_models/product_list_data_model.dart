@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/data/mappers/product_mapper.dart';
-import 'package:clean_ecommerce/domain/models/product.dart';
+import 'package:clean_ecommerce/domain/entities/product.dart';
 
 class ProductListingDataModel {
   final int first;

@@ -1,7 +1,7 @@
 import 'package:clean_ecommerce/data/data_config.dart';
 import 'package:clean_ecommerce/data/data_models/stock_data_model.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
-import 'package:clean_ecommerce/domain/result/result.dart';
+import 'package:clean_ecommerce/domain/entities/result.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
