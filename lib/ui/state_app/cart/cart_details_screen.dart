@@ -7,11 +7,11 @@ import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.dart';
-import 'package:clean_ecommerce/ui/cart/cart_details_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/state_app/cart/cart_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
-import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
-import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
+import 'package:clean_ecommerce/ui/state_app/state_app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
+import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
 import 'package:flutter/material.dart';
 
 class CartDetailsScreen extends StatefulWidget {
@@ -29,11 +29,12 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   late DecreaseCartItemUsecase _decreaseItemUseCase;
   late RemoveItemToCartUseCase _removeItemUseCase;
   CartDetailsState _state = CartDetailsState();
+  late StateAppNavigator _navigator;
 
   @override
   void initState() {
     super.initState();
-
+    _navigator = StateAppNavigator(context);
     final presenter = CartDetailsScreenPresenter(
       initialState: _state,
       onStateChanged: (newState) {
@@ -102,8 +103,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   Widget build(BuildContext context) {
     return CleanScaffold(
       title: 'Bag',
-      navigator: AppNavigator(context),
+      goCart: _navigator.goCart,
       body: _buildBodyContent(context),
+      context: context,
     );
   }
 

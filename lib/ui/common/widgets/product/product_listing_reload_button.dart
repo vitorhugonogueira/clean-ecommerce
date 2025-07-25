@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProductListingReloadButton extends StatelessWidget {
-  final VoidCallback? onPressed; 
-  final bool inProgress;         
+  final VoidCallback? onPressed;
+  final bool inProgress;
 
   const ProductListingReloadButton({
     super.key,
@@ -15,7 +15,7 @@ class ProductListingReloadButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       child: SizedBox(
-        width: 80, 
+        width: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -27,8 +27,8 @@ class ProductListingReloadButton extends StatelessWidget {
               )
             else
               const Icon(Icons.refresh),
-            const SizedBox(width: 8), 
-            const Text('Reload'), 
+            const SizedBox(width: 8),
+            const Text('Reload'),
           ],
         ),
       ),

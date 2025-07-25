@@ -6,10 +6,10 @@ import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
-import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
-import 'package:clean_ecommerce/ui/product/details/product_details_screen_presenter.dart';
-import 'package:clean_ecommerce/ui/product/widgets/product_image.dart';
+import 'package:clean_ecommerce/ui/state_app/state_app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
+import 'package:clean_ecommerce/ui/state_app/product/details/product_details_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddProductToCartUseCase _addItemToCartUseCase;
-  late AppNavigator _navigator;
+  late StateAppNavigator _navigator;
   late ProductDetailsState _state;
 
   @override
@@ -35,7 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final cartDataSource = CartDataSource();
     final stockDataSource = StockDataSource();
     final dialog = EcommerceDialog(context);
-    _navigator = AppNavigator(
+    _navigator = StateAppNavigator(
       context,
       cartGoBackCallback: _fetchProductDetails,
     );
@@ -93,8 +93,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     return CleanScaffold(
       title: title,
-      navigator: _navigator,
+      goCart: _navigator.goCart,
       body: _buildBodyContent(),
+      context: context,
     );
   }
 

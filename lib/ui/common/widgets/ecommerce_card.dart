@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SimpleCard extends StatelessWidget {
+class EcommerceCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final Color backgroundColor;
   final BorderRadiusGeometry? borderRadius;
 
-  const SimpleCard({
+  const EcommerceCard({
     super.key,
     required this.child,
     this.padding = const EdgeInsets.all(0.0),

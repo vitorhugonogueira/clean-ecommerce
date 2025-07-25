@@ -2,11 +2,11 @@ import 'package:clean_ecommerce/data/data_sources/product_listing_data_source.da
 import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
-import 'package:clean_ecommerce/ui/common/widgets/clean_scaffold/clean_scaffold.dart';
-import 'package:clean_ecommerce/ui/product/listing/product_listing_screen_presenter.dart';
-import 'package:clean_ecommerce/ui/product/listing/widgets/product_card_widget.dart';
-import 'package:clean_ecommerce/ui/product/listing/widgets/product_listing_reload_button.dart';
+import 'package:clean_ecommerce/ui/state_app/state_app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
+import 'package:clean_ecommerce/ui/state_app/product/listing/product_listing_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/common/widgets/product/product_card.dart';
+import 'package:clean_ecommerce/ui/common/widgets/product/product_listing_reload_button.dart';
 import 'package:flutter/material.dart';
 
 class ProductListingScreen extends StatefulWidget {
@@ -18,13 +18,13 @@ class ProductListingScreen extends StatefulWidget {
 
 class _ProductListingScreenState extends State<ProductListingScreen> {
   late ShowProductsUseCase _useCase;
-  late AppNavigator _navigator;
+  late StateAppNavigator _navigator;
   ProductListingState _state = ProductListingState();
 
   @override
   void initState() {
     super.initState();
-    _navigator = AppNavigator(context);
+    _navigator = StateAppNavigator(context);
     final repository = ProductListingDataSource();
     final dialog = EcommerceDialog(context);
     final presenter = ProductListingScreenPresenter(
@@ -53,7 +53,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   @override
   Widget build(BuildContext context) {
     return CleanScaffold(
-      navigator: AppNavigator(context),
+      goCart: _navigator.goCart,
+      context: context,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,4 @@
-import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
-import 'package:clean_ecommerce/ui/common/widgets/clean_app_bar/clean_app_bar.dart';
+import 'package:clean_ecommerce/ui/common/widgets/ecommerce_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class CleanScaffold extends Scaffold {
@@ -8,14 +7,16 @@ class CleanScaffold extends Scaffold {
     String? title,
     List<Widget>? actions,
     required Widget super.body,
-    required AppNavigator navigator,
+    required BuildContext context,
+    Function()? goCart,
     super.floatingActionButton,
     super.floatingActionButtonLocation,
   }) : super(
          appBar: CleanAppBar(
            title: title,
            actions: actions,
-           navigator: navigator,
+           goCart: goCart,
+           context: context,
          ),
        );
 }

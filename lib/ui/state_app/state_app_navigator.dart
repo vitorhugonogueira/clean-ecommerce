@@ -1,14 +1,14 @@
 import 'package:clean_ecommerce/domain/gateways/navigator_gateway.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
-import 'package:clean_ecommerce/ui/cart/cart_details_screen.dart';
-import 'package:clean_ecommerce/ui/product/details/product_details_screen.dart';
+import 'package:clean_ecommerce/ui/state_app/cart/cart_details_screen.dart';
+import 'package:clean_ecommerce/ui/state_app/product/details/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
-class AppNavigator implements NavigatorGateway {
+class StateAppNavigator implements NavigatorGateway {
   final BuildContext context;
   final Function? cartGoBackCallback;
 
-  AppNavigator(this.context, {this.cartGoBackCallback});
+  StateAppNavigator(this.context, {this.cartGoBackCallback});
 
   @override
   void goCart({Cart? cart, Function? callback}) async {
