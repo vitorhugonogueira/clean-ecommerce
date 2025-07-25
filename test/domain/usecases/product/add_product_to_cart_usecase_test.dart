@@ -1,6 +1,6 @@
 import 'package:clean_ecommerce/domain/models/cart.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/add_item_to_cart_usecase.dart';
+import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,7 +15,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail('.', null),
         dialog: dialog,
         presenter: presenter,
@@ -37,7 +37,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail('.', null),
         dialog: dialog,
         presenter: presenter,
@@ -64,7 +64,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail('.', null),
         dialog: dialog,
         presenter: presenter,
@@ -92,7 +92,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail('.', null),
         dialog: dialog,
         presenter: presenter,
@@ -114,7 +114,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail(
           'An error had been done in saving cart.',
           null,
@@ -141,7 +141,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveFail(
           'An error had been done in saving cart.',
           null,
@@ -166,7 +166,7 @@ void main() {
       final dialog = MockDialogMockito();
       final navigator = MockNavigatorMockito();
       final presenter = MockProductDetailsPresenterMockito();
-      final usecase = AddItemToCartUseCase(
+      final usecase = AddProductToCartUseCase(
         cartRepository: CartDataSourceMock.saveSuccess(null),
         dialog: dialog,
         presenter: presenter,
@@ -207,7 +207,7 @@ void main() {
         final dialog = MockDialogMockito();
         final navigator = MockNavigatorMockito();
         final presenter = MockProductDetailsPresenterMockito();
-        final usecase = AddItemToCartUseCase(
+        final usecase = AddProductToCartUseCase(
           cartRepository: CartDataSourceMock.saveSuccess(null),
           dialog: dialog,
           presenter: presenter,

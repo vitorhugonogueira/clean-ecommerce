@@ -6,14 +6,14 @@ import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
 
-class AddItemToCartUseCase {
+class AddProductToCartUseCase {
   final CartRepository cartRepository;
   final StockRepository stockRepository;
   final ProductDetailsPresenter presenter;
   final NavigatorGateway navigator;
   final DialogGateway dialog;
 
-  AddItemToCartUseCase({
+  AddProductToCartUseCase({
     required this.cartRepository,
     required this.dialog,
     required this.navigator,

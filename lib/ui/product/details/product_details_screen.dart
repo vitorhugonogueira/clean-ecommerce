@@ -3,7 +3,7 @@ import 'package:clean_ecommerce/data/data_sources/product_details_data_source.da
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/models/product.dart';
 import 'package:clean_ecommerce/domain/states/product_details_state.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/add_item_to_cart_usecase.dart';
+import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/app_navigator.dart';
@@ -23,7 +23,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late ShowProductDetailsUseCase _showDetailsUseCase;
-  late AddItemToCartUseCase _addItemToCartUseCase;
+  late AddProductToCartUseCase _addItemToCartUseCase;
   late AppNavigator _navigator;
 
   ProductDetailsState _state = ProductDetailsState();
@@ -58,7 +58,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       cartRepository: cartDataSource,
       stockRepository: stockDataSource,
     );
-    _addItemToCartUseCase = AddItemToCartUseCase(
+    _addItemToCartUseCase = AddProductToCartUseCase(
       cartRepository: cartDataSource,
       dialog: dialog,
       navigator: _navigator,
