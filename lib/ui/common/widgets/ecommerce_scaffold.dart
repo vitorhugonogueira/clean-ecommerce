@@ -6,17 +6,17 @@ class CleanScaffold extends Scaffold {
     super.key,
     String? title,
     List<Widget>? actions,
+    Function()? goCart,
     required Widget super.body,
     required BuildContext context,
-    Function()? goCart,
     super.floatingActionButton,
     super.floatingActionButtonLocation,
   }) : super(
          appBar: CleanAppBar(
            title: title,
            actions: actions,
-           goCart: goCart,
            context: context,
+           goCart: goCart,
          ),
        );
 }

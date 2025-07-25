@@ -13,7 +13,8 @@ class CleanAppBar extends AppBar {
              actions ??
              [
                IconButton(
-                 onPressed: goCart,
+                 onPressed:
+                     goCart ?? () => Navigator.of(context).pushNamed('/cart'),
                  icon: const Icon(Icons.shopping_bag_sharp),
                ),
                IconButton(

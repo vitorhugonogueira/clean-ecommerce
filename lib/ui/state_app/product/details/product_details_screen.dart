@@ -6,7 +6,7 @@ import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/state_app/state_app_navigator.dart';
+import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
 import 'package:clean_ecommerce/ui/state_app/product/details/product_details_screen_presenter.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
@@ -24,7 +24,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddProductToCartUseCase _addItemToCartUseCase;
-  late StateAppNavigator _navigator;
+  late EcommerceNavigator _navigator;
   late ProductDetailsState _state;
 
   @override
@@ -35,7 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final cartDataSource = CartDataSource();
     final stockDataSource = StockDataSource();
     final dialog = EcommerceDialog(context);
-    _navigator = StateAppNavigator(
+    _navigator = EcommerceNavigator(
       context,
       cartGoBackCallback: _fetchProductDetails,
     );
