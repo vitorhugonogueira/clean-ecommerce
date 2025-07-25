@@ -2,11 +2,11 @@ import 'package:clean_ecommerce/domain/entities/product.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 
-class ProductDetailsScreenPresenter implements ProductDetailsPresenter {
+class ProductStatePagePresenter implements ProductDetailsPresenter {
   final Function(ProductDetailsState) onStateChanged;
   late ProductDetailsState _state;
 
-  ProductDetailsScreenPresenter({required this.onStateChanged}) {
+  ProductStatePagePresenter({required this.onStateChanged}) {
     _show(ProductDetailsState());
   }
 

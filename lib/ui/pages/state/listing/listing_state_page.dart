@@ -4,19 +4,19 @@ import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.da
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
-import 'package:clean_ecommerce/ui/state_app/product/listing/product_listing_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page_presenter.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_card.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_listing_reload_button.dart';
 import 'package:flutter/material.dart';
 
-class ProductListingScreen extends StatefulWidget {
-  const ProductListingScreen({super.key});
+class ListingStatePage extends StatefulWidget {
+  const ListingStatePage({super.key});
 
   @override
-  State<ProductListingScreen> createState() => _ProductListingScreenState();
+  State<ListingStatePage> createState() => _ListingStatePageState();
 }
 
-class _ProductListingScreenState extends State<ProductListingScreen> {
+class _ListingStatePageState extends State<ListingStatePage> {
   late ShowProductsUseCase _useCase;
   late EcommerceNavigator _navigator;
   ProductListingState _state = ProductListingState();

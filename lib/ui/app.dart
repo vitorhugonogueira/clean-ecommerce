@@ -1,8 +1,8 @@
 import 'package:clean_ecommerce/ui/app_router.dart';
 import 'package:clean_ecommerce/ui/menu_screen.dart';
-import 'package:clean_ecommerce/ui/state_app/cart/cart_details_screen.dart';
-import 'package:clean_ecommerce/ui/state_app/product/details/product_details_screen.dart';
-import 'package:clean_ecommerce/ui/state_app/product/listing/product_listing_screen.dart';
+import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page.dart';
+import 'package:clean_ecommerce/ui/pages/state/product/product_state_page.dart';
+import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page.dart';
 import 'package:flutter/material.dart';
 
 class CleanArchEcommerce extends StatelessWidget {
@@ -18,10 +18,10 @@ class CleanArchEcommerce extends StatelessWidget {
         '/state-app':
             (context) => AppRouter(
               themeColor: Colors.deepOrange,
-              productListingScreen: ProductListingScreen(),
-              cartScreen: CartDetailsScreen(),
+              productListingScreen: ListingStatePage(),
+              cartScreen: CartStatePage(),
               getProductDetailsScreen: (id) {
-                return ProductDetailsScreen(productId: id);
+                return ProductStatePage(productId: id);
               },
             ),
       },

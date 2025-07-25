@@ -2,11 +2,11 @@ import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/presenters/cart_details_presenter.dart';
 import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 
-class CartDetailsScreenPresenter implements CartDetailsPresenter {
+class CartStatePagePresenter implements CartDetailsPresenter {
   final Function(CartDetailsState) onStateChanged;
   CartDetailsState _state;
 
-  CartDetailsScreenPresenter({
+  CartStatePagePresenter({
     required this.onStateChanged,
     required CartDetailsState initialState,
   }) : _state = initialState;

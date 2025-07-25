@@ -7,22 +7,22 @@ import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.dart';
-import 'package:clean_ecommerce/ui/state_app/cart/cart_details_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page_presenter.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
 import 'package:flutter/material.dart';
 
-class CartDetailsScreen extends StatefulWidget {
+class CartStatePage extends StatefulWidget {
   final Cart? cart;
 
-  const CartDetailsScreen({super.key, this.cart});
+  const CartStatePage({super.key, this.cart});
 
   @override
-  State<CartDetailsScreen> createState() => _CartDetailsScreenState();
+  State<CartStatePage> createState() => _CartStatePageState();
 }
 
-class _CartDetailsScreenState extends State<CartDetailsScreen> {
+class _CartStatePageState extends State<CartStatePage> {
   late ShowCartDetailsUsecase _showDetailsUseCase;
   late IncreaseCartItemUsecase _increaseItemUseCase;
   late DecreaseCartItemUsecase _decreaseItemUseCase;
@@ -32,7 +32,7 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    final presenter = CartDetailsScreenPresenter(
+    final presenter = CartStatePagePresenter(
       initialState: _state,
       onStateChanged: (newState) {
         if (!mounted) return;

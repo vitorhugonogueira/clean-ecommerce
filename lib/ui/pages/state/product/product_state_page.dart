@@ -8,20 +8,20 @@ import 'package:clean_ecommerce/domain/usecases/product/show_product_details_use
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
-import 'package:clean_ecommerce/ui/state_app/product/details/product_details_screen_presenter.dart';
+import 'package:clean_ecommerce/ui/pages/state/product/product_state_page_presenter.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class ProductStatePage extends StatefulWidget {
   final String productId;
 
-  const ProductDetailsScreen({super.key, required this.productId});
+  const ProductStatePage({super.key, required this.productId});
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  State<ProductStatePage> createState() => _ProductStatePageState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _ProductStatePageState extends State<ProductStatePage> {
   late ShowProductDetailsUseCase _showDetailsUseCase;
   late AddProductToCartUseCase _addItemToCartUseCase;
   late EcommerceNavigator _navigator;
@@ -39,7 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       context,
       cartGoBackCallback: _fetchProductDetails,
     );
-    final presenter = ProductDetailsScreenPresenter(
+    final presenter = ProductStatePagePresenter(
       onStateChanged: (newState) {
         if (!mounted) return;
         setState(() {
