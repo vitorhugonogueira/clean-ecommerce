@@ -1,5 +1,8 @@
 import 'package:clean_ecommerce/ui/app_router.dart';
 import 'package:clean_ecommerce/ui/menu_screen.dart';
+import 'package:clean_ecommerce/ui/pages/provider/cart/cart_provider_page.dart';
+import 'package:clean_ecommerce/ui/pages/provider/listing/listing_provider_page.dart';
+import 'package:clean_ecommerce/ui/pages/provider/product/product_provider_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/product/product_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page.dart';
@@ -22,6 +25,15 @@ class CleanArchEcommerce extends StatelessWidget {
               cartScreen: CartStatePage(),
               getProductDetailsScreen: (id) {
                 return ProductStatePage(productId: id);
+              },
+            ),
+        '/provider-app':
+            (context) => AppRouter(
+              themeColor: Colors.lightGreenAccent,
+              productListingScreen: ListingProviderPage(),
+              cartScreen: CartProviderPage(),
+              getProductDetailsScreen: (id) {
+                return ProductProviderPage(productId: id);
               },
             ),
       },

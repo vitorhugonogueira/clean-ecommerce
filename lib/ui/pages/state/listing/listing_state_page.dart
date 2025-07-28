@@ -3,10 +3,8 @@ import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
-import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
+import 'package:clean_ecommerce/ui/common/widgets/product/product_listing.dart';
 import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page_presenter.dart';
-import 'package:clean_ecommerce/ui/common/widgets/product/product_card.dart';
-import 'package:clean_ecommerce/ui/common/widgets/product/product_listing_reload_button.dart';
 import 'package:flutter/material.dart';
 
 class ListingStatePage extends StatefulWidget {
@@ -27,7 +25,7 @@ class _ListingStatePageState extends State<ListingStatePage> {
     _navigator = EcommerceNavigator(context);
     final repository = ProductListingDataSource();
     final dialog = EcommerceDialog(context);
-    final presenter = ProductListingScreenPresenter(
+    final presenter = ListingStatePagePresenter(
       onStateChanged: (state) {
         setState(() {
           _state = state;
@@ -52,58 +50,10 @@ class _ListingStatePageState extends State<ListingStatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CleanScaffold(
-      context: context,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_state.pagination.products.isNotEmpty)
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    padding: const EdgeInsets.only(bottom: 120.0),
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 250.0,
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 8.0,
-                          childAspectRatio: 0.9,
-                        ),
-                    itemCount: _state.pagination.products.length,
-                    itemBuilder: (context, index) {
-                      final product = _state.pagination.products[index];
-                      return ProductCard(
-                        product: product,
-                        onTap: _navigator.goDetails,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            if (_state.pagination.products.isEmpty && !_state.isLoading)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('No products found.'),
-                      const SizedBox(height: 16),
-                      ProductListingReloadButton(
-                        onPressed: _fetchProducts,
-                        inProgress: _state.isLoading,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            if (_state.isLoading && _state.pagination.products.isEmpty)
-              const Expanded(child: Center(child: CircularProgressIndicator())),
-          ],
-        ),
-      ),
+    return ProductListing(
+      state: _state,
+      fetchProducts: _fetchProducts,
+      navigator: _navigator,
     );
   }
 }

@@ -1,18 +1,19 @@
 import 'package:clean_ecommerce/domain/entities/product_pagination.dart';
 import 'package:clean_ecommerce/domain/presenters/product_listing_presenter.dart';
 import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
+import 'package:flutter/material.dart';
 
-class ListingStatePagePresenter implements ProductListingPresenter {
-  final Function(ProductListingState) onStateChanged;
+class ListingProviderPagePresenter extends ChangeNotifier
+    implements ProductListingPresenter {
   late ProductListingState _state;
 
-  ListingStatePagePresenter({required this.onStateChanged}) {
+  ListingProviderPagePresenter() {
     _show(ProductListingState());
   }
 
   _show(ProductListingState state) {
     _state = state;
-    onStateChanged(state);
+    notifyListeners();
   }
 
   @override
@@ -24,4 +25,6 @@ class ListingStatePagePresenter implements ProductListingPresenter {
   void showProducts(ProductPagination pagination) {
     _show(_state.copyWith(pagination: pagination));
   }
+
+  ProductListingState get state => _state;
 }

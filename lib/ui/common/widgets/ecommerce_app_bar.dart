@@ -37,12 +37,18 @@ class CleanArchAppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: Theme.of(context).colorScheme.primary,
+    );
+
     if (title != null && title!.isNotEmpty) {
-      return Text(title!, style: TextStyle(fontWeight: FontWeight.bold));
+      return Text(title!, style: textStyle);
     }
+
     return Row(
       children: [
-        const Text('CLEAN ARCH', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('CLEAN ARCH', style: textStyle),
         const SizedBox(width: 6),
         Flexible(
           child: LayoutBuilder(

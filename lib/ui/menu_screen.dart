@@ -31,13 +31,24 @@ class MenuScreen extends StatelessWidget {
             ),
             SizedBox(height: 32),
             SizedBox(
-              width: 250,
-              height: 50,
+              width: 220,
+              height: 40,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/state-app');
                 },
                 child: Text('setState', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 220,
+              height: 40,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/provider-app');
+                },
+                child: Text('Provider', style: TextStyle(fontSize: 18)),
               ),
             ),
           ],
