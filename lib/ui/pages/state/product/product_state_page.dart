@@ -53,7 +53,11 @@ class _ProductStatePageState extends State<ProductStatePage> {
       dialog: dialog,
       navigator: EcommerceNavigator(
         context,
-        cartGoBackCallback: _showDetailsUseCase.execute,
+        cartGoBackCallback:
+            () => _showDetailsUseCase.execute(
+              productId: widget.productId,
+              product: _state.product,
+            ),
       ),
       presenter: presenter,
       stockRepository: stockDataSource,

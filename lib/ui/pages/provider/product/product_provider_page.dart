@@ -42,7 +42,16 @@ class ProductProviderPage extends StatelessWidget {
             addProductToCartUseCase: AddProductToCartUseCase(
               cartRepository: cartDataSource,
               dialog: dialog,
-              navigator: EcommerceNavigator(context),
+              navigator: EcommerceNavigator(
+                context,
+                cartGoBackCallback:
+                    () => {
+                      usecase.execute(
+                        productId: productId,
+                        product: presenter.state.product,
+                      ),
+                    },
+              ),
               presenter: presenter,
               stockRepository: stockDataSource,
             ),
