@@ -1,14 +1,15 @@
+import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter extends StatelessWidget {
   final Widget productListingScreen;
   final Widget cartScreen;
   final Widget Function(String id) getProductDetailsScreen;
-  final Color themeColor;
+  final Flavor flavor;
 
   const AppRouter({
     super.key,
-    required this.themeColor,
+    required this.flavor,
     required this.productListingScreen,
     required this.cartScreen,
     required this.getProductDetailsScreen,
@@ -16,14 +17,8 @@ class AppRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = ColorScheme.fromSeed(seedColor: themeColor);
     return Theme(
-      data: ThemeData(
-        scaffoldBackgroundColor: scheme.onPrimary,
-        colorScheme: scheme,
-        useMaterial3: true,
-        fontFamily: 'Montserrat',
-      ),
+      data: AppFlavor.getTheme(flavor),
       child: Navigator(
         onGenerateRoute: (settings) {
           final String? path = settings.name;

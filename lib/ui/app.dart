@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:clean_ecommerce/ui/app_router.dart';
 import 'package:clean_ecommerce/ui/menu_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/cart/cart_provider_page.dart';
@@ -20,7 +21,7 @@ class CleanArchEcommerce extends StatelessWidget {
         '/': (context) => const MenuPage(),
         '/state-app':
             (context) => AppRouter(
-              themeColor: Colors.deepOrange,
+              flavor: Flavor.state,
               productListingScreen: ListingStatePage(),
               cartScreen: CartStatePage(),
               getProductDetailsScreen: (id) {
@@ -29,7 +30,7 @@ class CleanArchEcommerce extends StatelessWidget {
             ),
         '/provider-app':
             (context) => AppRouter(
-              themeColor: Colors.lightGreenAccent,
+              flavor: Flavor.provider,
               productListingScreen: ListingProviderPage(),
               cartScreen: CartProviderPage(),
               getProductDetailsScreen: (id) {

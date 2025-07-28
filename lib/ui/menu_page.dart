@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatelessWidget {
@@ -5,6 +6,9 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final stateScheme = AppFlavor.getColorScheme(Flavor.state);
+    final providerScheme = AppFlavor.getColorScheme(Flavor.provider);
+
     return Scaffold(
       appBar: AppBar(title: Text('Clean Arch E-Commerce'), centerTitle: true),
       body: Center(
@@ -34,6 +38,10 @@ class MenuPage extends StatelessWidget {
               width: 220,
               height: 40,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: stateScheme.primary,
+                  foregroundColor: stateScheme.onPrimary,
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed('/state-app');
                 },
@@ -45,6 +53,10 @@ class MenuPage extends StatelessWidget {
               width: 220,
               height: 40,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: providerScheme.primary,
+                  foregroundColor: providerScheme.onPrimary,
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed('/provider-app');
                 },
