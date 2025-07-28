@@ -6,8 +6,8 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stateScheme = AppFlavor.getColorScheme(Flavor.state);
-    final providerScheme = AppFlavor.getColorScheme(Flavor.provider);
+    final stateScheme = AppFlavor.colorScheme(Flavor.state);
+    final providerScheme = AppFlavor.colorScheme(Flavor.provider);
 
     return Scaffold(
       appBar: AppBar(title: Text('Clean Arch E-Commerce'), centerTitle: true),

@@ -8,31 +8,24 @@ class ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageSource = DataConfig.productImagesUrl + product.imageUrl;
-    return product.imageUrl.isNotEmpty
-        ? Image.network(
-          imageSource,
-          fit: BoxFit.cover,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(
-              child: CircularProgressIndicator(
-                value:
-                    loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-              ),
-            );
-          },
-          errorBuilder: (context, error, stackTrace) {
-            return const Center(
-              child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
-            );
-          },
-        )
-        : const Center(
-          child: Icon(Icons.image_not_supported, size: 40, color: Colors.grey),
+    if (product.imageUrl.isEmpty) {
+      return const Center(
+        child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
+      );
+    }
+
+    return Image.network(
+      DataConfig.productImagesUrl + product.imageUrl,
+      fit: BoxFit.cover,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Center(child: CircularProgressIndicator());
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return const Center(
+          child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
         );
+      },
+    );
   }
 }

@@ -8,14 +8,14 @@ final variantColor = {
 };
 
 class AppFlavor {
-  static ColorScheme getColorScheme(Flavor flavor) {
+  static ColorScheme colorScheme(Flavor flavor) {
     return ColorScheme.fromSeed(
       seedColor: variantColor[flavor] ?? variantColor[Flavor.state]!,
     );
   }
 
-  static ThemeData getTheme(Flavor flavor) {
-    final scheme = getColorScheme(flavor);
+  static ThemeData theme(Flavor flavor) {
+    final scheme = colorScheme(flavor);
 
     return ThemeData(
       scaffoldBackgroundColor: scheme.onPrimary,

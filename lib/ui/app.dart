@@ -1,6 +1,6 @@
 import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:clean_ecommerce/ui/app_router.dart';
-import 'package:clean_ecommerce/ui/menu_page.dart';
+import 'package:clean_ecommerce/ui/pages/menu_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/cart/cart_provider_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/listing/listing_provider_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/product/product_provider_page.dart';

@@ -18,7 +18,7 @@ class AppRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: AppFlavor.getTheme(flavor),
+      data: AppFlavor.theme(flavor),
       child: Navigator(
         onGenerateRoute: (settings) {
           final String? path = settings.name;
