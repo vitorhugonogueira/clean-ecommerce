@@ -1,5 +1,5 @@
 import 'package:clean_ecommerce/ui/app_router.dart';
-import 'package:clean_ecommerce/ui/menu_screen.dart';
+import 'package:clean_ecommerce/ui/menu_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/cart/cart_provider_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/listing/listing_provider_page.dart';
 import 'package:clean_ecommerce/ui/pages/provider/product/product_provider_page.dart';
@@ -17,7 +17,7 @@ class CleanArchEcommerce extends StatelessWidget {
       title: 'Clean Arch E-Commerce',
       theme: ThemeData(useMaterial3: true, fontFamily: 'Montserrat'),
       routes: {
-        '/': (context) => const MenuScreen(),
+        '/': (context) => const MenuPage(),
         '/state-app':
             (context) => AppRouter(
               themeColor: Colors.deepOrange,
