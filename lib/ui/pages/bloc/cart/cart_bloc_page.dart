@@ -6,10 +6,9 @@ import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
+import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/ui/common/widgets/cart/cart_details.dart';
 import 'package:clean_ecommerce/ui/pages/bloc/cart/cart_bloc_page_presenter.dart';
-import 'package:clean_ecommerce/ui/pages/bloc/listing/listing_bloc_page_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +47,7 @@ class CartBlocPage extends StatelessWidget {
 
     return BlocProvider(
       create: (_) => presenter,
-      child: BlocBuilder<ListingBlocPagePresenter, ProductListingState>(
+      child: BlocBuilder<CartBlocPagePresenter, CartDetailsState>(
         builder: (context, state) {
           return CartDetails(
             increaseItem: increaseItem,
