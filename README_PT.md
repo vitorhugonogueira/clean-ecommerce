@@ -2,13 +2,23 @@
 
 Um projeto Flutter de um protótipo de e-commerce aplicando princípios da Arquitetura Limpa.
 
+_Publicado em: [clean-ecommerce.vercel.app](https://clean-ecommerce.vercel.app/)._
+
 ## Escopo
 
-- Realizar listagem de produtos, detalhes de produtos e controle de carrinho.
-- Abordar casos de uso que podem trazer complexidade (regras de negócio) ao front-end:
+- Telas:
+    - **Listagem de produtos**
+    - **Detalhes do produto**
+    - **Carrinho**
+- Casos de uso que podem trazer complexidade (regras de negócio) ao front-end:
     - **Controle de estoque considerando o carrinho atual** (não persistido remotamente).
     - **Controle de navegação condicionada** (Ex: navegar para o carrinho ou permanecer na tela de detalhes após inclusão no carrinho).
     - **Tratamento de erros**.
+- **Testes unitários** para o domínio da aplicação.
+- Construir a UI com diferentes estratégias de gerenciamento de estado para demonstrar a flexibilidade de uma arquitetura limpa:
+    - <font color="darkviolet">setState</font>
+    - <font color="green">Provider</font>
+    - <font color="brown">Bloc</font>
 
 ## Introdução
 

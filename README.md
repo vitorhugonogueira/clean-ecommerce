@@ -2,15 +2,25 @@
 
 A Flutter project of an e-commerce prototype applying Clean Architecture principles.
 
-_You can read this document in Portuguese [here](README_PT.md)_.
+- _You can read this document in Portuguese [here](README_PT.md)._
+
+- _You can try it: [clean-ecommerce.vercel.app](https://clean-ecommerce.vercel.app/)._
 
 ## Scope
 
-- To realize product listing, details and cart control.
-- To approach use cases that can bring complexity (business rules) to the front-end:
+- Screens:
+    - **Product listing**
+    - **Product details**
+    - **Cart**
+- Use cases that can bring complexity (business rules) to the front-end:
     - **Stock control considering the current cart** (not persisted remotely).
     - **Conditional navigation control** (Ex: to navigate to cart page or stay at details after adding item to cart).
     - **Error handling**.
+- **Unit tests** for domain layer.
+- Build the UI layer with different state management approaches showing how we can be free to choose the best state management for each point if we use a good clean architecture. Current having the flavors:
+    - <font color="darkviolet">setState</font>
+    - <font color="green">Provider</font>
+    - <font color="brown">Bloc</font>
 
 ## Introduction
 
