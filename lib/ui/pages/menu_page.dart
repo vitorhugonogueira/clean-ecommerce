@@ -8,6 +8,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final stateScheme = AppFlavor.colorScheme(Flavor.state);
     final providerScheme = AppFlavor.colorScheme(Flavor.provider);
+    final blocScheme = AppFlavor.colorScheme(Flavor.bloc);
 
     return Scaffold(
       appBar: AppBar(title: Text('Clean Arch E-Commerce'), centerTitle: true),
@@ -61,6 +62,21 @@ class MenuPage extends StatelessWidget {
                   Navigator.of(context).pushNamed('/provider-app');
                 },
                 child: Text('Provider', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 220,
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: blocScheme.primary,
+                  foregroundColor: blocScheme.onPrimary,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/bloc-app');
+                },
+                child: Text('Bloc', style: TextStyle(fontSize: 18)),
               ),
             ),
           ],
