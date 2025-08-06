@@ -22,7 +22,7 @@ class CleanArchEcommerce extends StatelessWidget {
       title: 'Clean Arch E-Commerce',
       theme: ThemeData(useMaterial3: true, fontFamily: 'Montserrat'),
       routes: {
-        '/': (context) => const MenuPage(),
+        '/': (context) => MenuPage(),
         '/state-app':
             (context) => AppRouter(
               flavor: Flavor.state,

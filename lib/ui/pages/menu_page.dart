@@ -1,34 +1,50 @@
+import 'dart:js_interop_unsafe';
 import 'package:clean_ecommerce/ui/app_flavor.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:js_interop' as js;
 
-class MenuPage extends StatelessWidget {
-  const MenuPage({super.key});
+class MenuPage extends StatefulWidget {
+  final schemes = [
+    {
+      'label': 'setState',
+      'route': '/state-app',
+      'scheme': AppFlavor.colorScheme(Flavor.state),
+    },
+    {
+      'label': 'Provider',
+      'route': '/provider-app',
+      'scheme': AppFlavor.colorScheme(Flavor.provider),
+    },
+    {
+      'label': 'Bloc',
+      'route': '/bloc-app',
+      'scheme': AppFlavor.colorScheme(Flavor.bloc),
+    },
+    {
+      'label': 'Provider (MVVM)',
+      'route': '/mvvm-app',
+      'scheme': AppFlavor.colorScheme(Flavor.mvvm),
+    },
+  ];
+  MenuPage({super.key});
+
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (kIsWeb) {
+      // ignore: invalid_runtime_check_with_js_interop_types
+      js.globalContext.callMethod('hideFlutterSplashScreen' as js.JSAny);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final schemes = [
-      {
-        'label': 'setState',
-        'route': '/state-app',
-        'scheme': AppFlavor.colorScheme(Flavor.state),
-      },
-      {
-        'label': 'Provider',
-        'route': '/provider-app',
-        'scheme': AppFlavor.colorScheme(Flavor.provider),
-      },
-      {
-        'label': 'Bloc',
-        'route': '/bloc-app',
-        'scheme': AppFlavor.colorScheme(Flavor.bloc),
-      },
-      {
-        'label': 'Provider (MVVM)',
-        'route': '/mvvm-app',
-        'scheme': AppFlavor.colorScheme(Flavor.mvvm),
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(title: Text('Clean Arch E-Commerce'), centerTitle: true),
       body: Center(
@@ -54,7 +70,7 @@ class MenuPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 32),
-            ...schemes.map((item) {
+            ...widget.schemes.map((item) {
               final scheme = item['scheme'] as ColorScheme;
               final label = item['label'] as String;
               final route = item['route'] as String;
