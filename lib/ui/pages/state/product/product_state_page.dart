@@ -72,8 +72,8 @@ class _ProductStatePageState extends State<ProductStatePage> {
       context: context,
       productId: widget.productId,
       state: _state,
-      showDetailsUseCase: _showDetailsUseCase,
-      addProductToCartUseCase: _addProductToCartUseCase,
+      load: _showDetailsUseCase.execute,
+      addProduct: _addProductToCartUseCase.execute,
     );
   }
 }

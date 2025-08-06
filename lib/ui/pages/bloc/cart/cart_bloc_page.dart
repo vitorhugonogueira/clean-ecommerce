@@ -1,6 +1,7 @@
 import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
@@ -49,10 +50,40 @@ class CartBlocPage extends StatelessWidget {
       create: (_) => presenter,
       child: BlocBuilder<CartBlocPagePresenter, CartDetailsState>(
         builder: (context, state) {
+          Future<void> increaseQuantity(Item item) async {
+            if (state.isValidatingAction) {
+              return;
+            }
+            await increaseItem.execute(
+              productId: item.product.id,
+              cart: state.cart,
+            );
+          }
+
+          Future<void> decreaseQuantity(Item item) async {
+            if (state.isValidatingAction) {
+              return;
+            }
+            await decreaseItem.execute(
+              productId: item.product.id,
+              cart: state.cart,
+            );
+          }
+
+          Future<void> remove(Item item) async {
+            if (state.isValidatingAction) {
+              return;
+            }
+            await removeItem.execute(
+              productId: item.product.id,
+              cart: state.cart,
+            );
+          }
+
           return CartDetails(
-            increaseItem: increaseItem,
-            decreaseItem: decreaseItem,
-            removeItem: removeItem,
+            increase: increaseQuantity,
+            decrease: decreaseQuantity,
+            remove: remove,
             state: presenter.state,
           );
         },

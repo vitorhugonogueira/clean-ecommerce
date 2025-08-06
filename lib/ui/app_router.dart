@@ -2,17 +2,17 @@ import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter extends StatelessWidget {
-  final Widget productListingScreen;
-  final Widget cartScreen;
-  final Widget Function(String id) getProductDetailsScreen;
+  final Widget Function(BuildContext context) listingScreenBuilder;
+  final Widget Function(BuildContext context) cartScreenBuilder;
+  final Widget Function(BuildContext context, String id) productScreenBuilder;
   final Flavor flavor;
 
   const AppRouter({
     super.key,
     required this.flavor,
-    required this.productListingScreen,
-    required this.cartScreen,
-    required this.getProductDetailsScreen,
+    required this.listingScreenBuilder,
+    required this.cartScreenBuilder,
+    required this.productScreenBuilder,
   });
 
   @override
@@ -25,17 +25,15 @@ class AppRouter extends StatelessWidget {
           final uri = Uri.parse(path ?? '/');
 
           if (path == '/') {
-            return MaterialPageRoute(
-              builder: (context) => productListingScreen,
-            );
+            return MaterialPageRoute(builder: listingScreenBuilder);
           }
           if (path == '/cart') {
-            return MaterialPageRoute(builder: (context) => cartScreen);
+            return MaterialPageRoute(builder: cartScreenBuilder);
           }
           if (uri.pathSegments[0] == 'details') {
             final id = uri.pathSegments[1];
             return MaterialPageRoute(
-              builder: (context) => getProductDetailsScreen(id),
+              builder: (context) => productScreenBuilder(context, id),
             );
           }
 

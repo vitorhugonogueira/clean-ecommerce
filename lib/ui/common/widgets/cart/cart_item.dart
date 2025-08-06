@@ -1,7 +1,4 @@
 import 'package:clean_ecommerce/domain/entities/item.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
 import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_image.dart';
 import 'package:flutter/material.dart';
@@ -9,39 +6,18 @@ import 'package:flutter/material.dart';
 class CartItem extends StatelessWidget {
   final Item item;
   final CartDetailsState state;
-  final IncreaseCartItemUsecase increaseItem;
-  final DecreaseCartItemUsecase decreaseItem;
-  final RemoveItemToCartUseCase removeItem;
+  final Function(Item item) increase;
+  final Function(Item item) decrease;
+  final Function(Item item) remove;
 
   const CartItem({
     super.key,
     required this.item,
     required this.state,
-    required this.increaseItem,
-    required this.decreaseItem,
-    required this.removeItem,
+    required this.increase,
+    required this.decrease,
+    required this.remove,
   });
-
-  Future<void> _increaseQuantity(String productId) async {
-    if (state.isValidatingAction || state.cart == null) {
-      return;
-    }
-    await increaseItem.execute(productId: productId, cart: state.cart!);
-  }
-
-  Future<void> _decreaseQuantity(String productId) async {
-    if (state.isValidatingAction || state.cart == null) {
-      return;
-    }
-    await decreaseItem.execute(productId: productId, cart: state.cart!);
-  }
-
-  Future<void> _removeItem(String productId) async {
-    if (state.isValidatingAction || state.cart == null) {
-      return;
-    }
-    await removeItem.execute(productId: productId, cart: state.cart!);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +57,7 @@ class CartItem extends StatelessWidget {
                         onPressed:
                             state.isValidatingAction
                                 ? null
-                                : () => _decreaseQuantity(product.id),
+                                : () => decrease(item),
                         tooltip: 'Decrease quantity',
                       ),
                       Padding(
@@ -99,7 +75,7 @@ class CartItem extends StatelessWidget {
                         onPressed:
                             state.isValidatingAction
                                 ? null
-                                : () => _increaseQuantity(product.id),
+                                : () => increase(item),
                         tooltip: 'Increase quantity',
                       ),
                     ],
@@ -113,10 +89,7 @@ class CartItem extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.delete_outline, color: colorScheme.secondary),
               tooltip: 'Remove item',
-              onPressed:
-                  state.isValidatingAction
-                      ? null
-                      : () => _removeItem(product.id),
+              onPressed: state.isValidatingAction ? null : () => remove(item),
             ),
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
@@ -22,7 +23,7 @@ class CartProviderPage extends StatelessWidget {
     final repository = CartDataSource();
     final dialog = EcommerceDialog(context);
     final presenter = CartProviderPagePresenter(
-      initialState: CartDetailsState(cart: cart),
+      initialState: CartDetailsState(cart: cart ?? Cart()),
     );
 
     final showDetails = ShowCartDetailsUsecase(
@@ -52,10 +53,40 @@ class CartProviderPage extends StatelessWidget {
       create: (_) => presenter,
       child: Consumer<CartProviderPagePresenter>(
         builder: (context, presenter, child) {
+          Future<void> increaseQuantity(Item item) async {
+            if (presenter.state.isValidatingAction) {
+              return;
+            }
+            await increaseItem.execute(
+              productId: item.product.id,
+              cart: presenter.state.cart,
+            );
+          }
+
+          Future<void> decreaseQuantity(Item item) async {
+            if (presenter.state.isValidatingAction) {
+              return;
+            }
+            await decreaseItem.execute(
+              productId: item.product.id,
+              cart: presenter.state.cart,
+            );
+          }
+
+          Future<void> remove(Item item) async {
+            if (presenter.state.isValidatingAction) {
+              return;
+            }
+            await removeItem.execute(
+              productId: item.product.id,
+              cart: presenter.state.cart,
+            );
+          }
+
           return CartDetails(
-            increaseItem: increaseItem,
-            decreaseItem: decreaseItem,
-            removeItem: removeItem,
+            increase: increaseQuantity,
+            decrease: decreaseQuantity,
+            remove: remove,
             state: presenter.state,
           );
         },

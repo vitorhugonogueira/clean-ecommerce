@@ -6,9 +6,28 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stateScheme = AppFlavor.colorScheme(Flavor.state);
-    final providerScheme = AppFlavor.colorScheme(Flavor.provider);
-    final blocScheme = AppFlavor.colorScheme(Flavor.bloc);
+    final schemes = [
+      {
+        'label': 'setState',
+        'route': '/state-app',
+        'scheme': AppFlavor.colorScheme(Flavor.state),
+      },
+      {
+        'label': 'Provider',
+        'route': '/provider-app',
+        'scheme': AppFlavor.colorScheme(Flavor.provider),
+      },
+      {
+        'label': 'Bloc',
+        'route': '/bloc-app',
+        'scheme': AppFlavor.colorScheme(Flavor.bloc),
+      },
+      {
+        'label': 'Provider (MVVM)',
+        'route': '/mvvm-app',
+        'scheme': AppFlavor.colorScheme(Flavor.mvvm),
+      },
+    ];
 
     return Scaffold(
       appBar: AppBar(title: Text('Clean Arch E-Commerce'), centerTitle: true),
@@ -35,50 +54,28 @@ class MenuPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 32),
-            SizedBox(
-              width: 220,
-              height: 40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: stateScheme.primary,
-                  foregroundColor: stateScheme.onPrimary,
+            ...schemes.map((item) {
+              final scheme = item['scheme'] as ColorScheme;
+              final label = item['label'] as String;
+              final route = item['route'] as String;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: SizedBox(
+                  width: 220,
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: scheme.primary,
+                      foregroundColor: scheme.onPrimary,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(route);
+                    },
+                    child: Text(label, style: TextStyle(fontSize: 18)),
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/state-app');
-                },
-                child: Text('setState', style: TextStyle(fontSize: 18)),
-              ),
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              width: 220,
-              height: 40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: providerScheme.primary,
-                  foregroundColor: providerScheme.onPrimary,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/provider-app');
-                },
-                child: Text('Provider', style: TextStyle(fontSize: 18)),
-              ),
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              width: 220,
-              height: 40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: blocScheme.primary,
-                  foregroundColor: blocScheme.onPrimary,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/bloc-app');
-                },
-                child: Text('Bloc', style: TextStyle(fontSize: 18)),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

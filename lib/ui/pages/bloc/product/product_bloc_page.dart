@@ -21,8 +21,8 @@ class ProductBlocPage extends StatelessWidget {
             context: context,
             productId: productId,
             state: state,
-            showDetailsUseCase: presenter.usecase,
-            addProductToCartUseCase: presenter.addProductUsecase,
+            load: presenter.usecase.execute,
+            addProduct: presenter.addProductUsecase.execute,
           );
         },
       ),

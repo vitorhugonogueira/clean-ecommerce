@@ -1,6 +1,7 @@
 import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
 import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
@@ -25,7 +26,7 @@ class _CartStatePageState extends State<CartStatePage> {
   late IncreaseCartItemUsecase _increaseItemUseCase;
   late DecreaseCartItemUsecase _decreaseItemUseCase;
   late RemoveItemToCartUseCase _removeItemUseCase;
-  CartDetailsState _state = CartDetailsState();
+  CartDetailsState _state = CartDetailsState(cart: Cart());
 
   @override
   void initState() {
@@ -67,12 +68,42 @@ class _CartStatePageState extends State<CartStatePage> {
     _showDetailsUseCase.execute();
   }
 
+  Future<void> increaseQuantity(Item item) async {
+    if (_state.isValidatingAction) {
+      return;
+    }
+    await _increaseItemUseCase.execute(
+      productId: item.product.id,
+      cart: _state.cart,
+    );
+  }
+
+  Future<void> decreaseQuantity(Item item) async {
+    if (_state.isValidatingAction) {
+      return;
+    }
+    await _decreaseItemUseCase.execute(
+      productId: item.product.id,
+      cart: _state.cart,
+    );
+  }
+
+  Future<void> remove(Item item) async {
+    if (_state.isValidatingAction) {
+      return;
+    }
+    await _removeItemUseCase.execute(
+      productId: item.product.id,
+      cart: _state.cart,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CartDetails(
-      increaseItem: _increaseItemUseCase,
-      decreaseItem: _decreaseItemUseCase,
-      removeItem: _removeItemUseCase,
+      increase: increaseQuantity,
+      decrease: decreaseQuantity,
+      remove: remove,
       state: _state,
     );
   }
