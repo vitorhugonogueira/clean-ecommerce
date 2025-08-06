@@ -5,7 +5,10 @@ import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 
 class CartBlocPagePresenter extends Cubit<CartDetailsState>
     implements CartDetailsPresenter {
-  CartBlocPagePresenter(Cart? cart) : super(CartDetailsState(cart: cart));
+  CartBlocPagePresenter(Cart? cart)
+    : super(CartDetailsState(cart: cart ?? Cart())) {
+    emit(state.copyWith(cart: cart));
+  }
 
   @override
   void setIsLoading(bool inProgress) {

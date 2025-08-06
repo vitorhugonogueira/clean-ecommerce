@@ -1,6 +1,4 @@
 import 'package:clean_ecommerce/domain/entities/product.dart';
-import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
-import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
@@ -11,28 +9,25 @@ class ProductDetails extends StatelessWidget {
   final String productId;
   final BuildContext context;
   final ProductDetailsState state;
-  final ShowProductDetailsUseCase showDetailsUseCase;
-  final AddProductToCartUseCase addProductToCartUseCase;
+  final Function(Product product, {int quantity, bool continueShopping})
+  addProduct;
+  final Function({required String productId, Product? product}) load;
 
   const ProductDetails({
     super.key,
     required this.context,
     required this.productId,
     required this.state,
-    required this.showDetailsUseCase,
-    required this.addProductToCartUseCase,
+    required this.load,
+    required this.addProduct,
   });
 
   _fetchProductDetails() {
-    showDetailsUseCase.execute(productId: productId, product: state.product);
+    load(productId: productId, product: state.product);
   }
 
   _add({required bool continueShopping}) {
-    addProductToCartUseCase.execute(
-      state.product!,
-      quantity: 1,
-      continueShopping: continueShopping,
-    );
+    addProduct(state.product!, quantity: 1, continueShopping: continueShopping);
   }
 
   _handleAddToCart() => _add(continueShopping: true);

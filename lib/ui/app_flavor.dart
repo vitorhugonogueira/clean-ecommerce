@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum Flavor { state, provider, bloc }
+enum Flavor { state, provider, bloc, mvvm }
 
 final variantColor = {
   Flavor.state: Colors.deepPurple,
   Flavor.provider: Colors.lightGreenAccent,
   Flavor.bloc: Colors.brown,
+  Flavor.mvvm: Colors.blue,
 };
 
 class AppFlavor {

@@ -38,23 +38,24 @@ class ProductProviderPage extends StatelessWidget {
             context: context,
             productId: productId,
             state: presenter.state,
-            showDetailsUseCase: usecase,
-            addProductToCartUseCase: AddProductToCartUseCase(
-              cartRepository: cartDataSource,
-              dialog: dialog,
-              navigator: EcommerceNavigator(
-                context,
-                cartGoBackCallback:
-                    () => {
-                      usecase.execute(
-                        productId: productId,
-                        product: presenter.state.product,
-                      ),
-                    },
-              ),
-              presenter: presenter,
-              stockRepository: stockDataSource,
-            ),
+            load: usecase.execute,
+            addProduct:
+                AddProductToCartUseCase(
+                  cartRepository: cartDataSource,
+                  dialog: dialog,
+                  navigator: EcommerceNavigator(
+                    context,
+                    cartGoBackCallback:
+                        () => {
+                          usecase.execute(
+                            productId: productId,
+                            product: presenter.state.product,
+                          ),
+                        },
+                  ),
+                  presenter: presenter,
+                  stockRepository: stockDataSource,
+                ).execute,
           );
         },
       ),

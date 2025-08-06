@@ -1,22 +1,20 @@
-import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
-import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
+import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/ui/common/widgets/cart/cart_item.dart';
 import 'package:clean_ecommerce/ui/common/widgets/ecommerce_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class CartDetails extends StatelessWidget {
-  final IncreaseCartItemUsecase increaseItem;
-  final DecreaseCartItemUsecase decreaseItem;
-  final RemoveItemToCartUseCase removeItem;
+  final Function(Item item) increase;
+  final Function(Item item) decrease;
+  final Function(Item item) remove;
   final CartDetailsState state;
 
   const CartDetails({
     super.key,
-    required this.increaseItem,
-    required this.decreaseItem,
-    required this.removeItem,
+    required this.increase,
+    required this.decrease,
+    required this.remove,
     required this.state,
   });
 
@@ -36,7 +34,7 @@ class CartDetails extends StatelessWidget {
 
     final cart = state.cart;
 
-    if (cart == null || cart.items.isEmpty) {
+    if (cart.items.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,9 +85,9 @@ class CartDetails extends StatelessWidget {
                   return CartItem(
                     item: item,
                     state: state,
-                    increaseItem: increaseItem,
-                    decreaseItem: decreaseItem,
-                    removeItem: removeItem,
+                    increase: increase,
+                    decrease: decrease,
+                    remove: remove,
                   );
                 },
               ),

@@ -1,12 +1,12 @@
 import 'package:clean_ecommerce/domain/entities/cart.dart';
 
 class CartDetailsState {
-  final Cart? cart;
+  final Cart cart;
   final bool isLoading;
   final bool isValidatingAction;
 
   CartDetailsState({
-    this.cart,
+    required this.cart,
     this.isLoading = false,
     this.isValidatingAction = false,
   });
