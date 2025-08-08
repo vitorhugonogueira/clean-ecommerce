@@ -22,6 +22,9 @@ A Flutter project of an e-commerce prototype applying Clean Architecture princip
     - <font color="green">Provider</font>
     - <font color="brown">Bloc</font>
     - <font color="blue">Provider (MVVM)</font>
+- Include two options of data source:
+    - API
+    - Firebase
 
 ## Introduction
 
