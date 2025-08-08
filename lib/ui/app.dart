@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/data/data_config.dart';
 import 'package:clean_ecommerce/ui/app_config.dart';
 import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:clean_ecommerce/ui/app_router.dart';
@@ -12,8 +13,6 @@ import 'package:clean_ecommerce/ui/pages/provider/product/product_provider_page.
 import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/product/product_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page.dart';
-import 'package:clean_ecommerce/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CleanArchEcommerce extends StatefulWidget {
@@ -27,9 +26,7 @@ class _CleanArchEcommerceState extends State<CleanArchEcommerce> {
   AppDataSource dataSource = AppDataSource.api;
 
   void changeDataSource(AppDataSource source) {
-    if (source == AppDataSource.firebase) {
-      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    }
+    if (source == AppDataSource.firebase) DataConfig.initializeFirebase();
     setState(() {
       dataSource = source;
     });

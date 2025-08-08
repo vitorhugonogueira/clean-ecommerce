@@ -1,3 +1,6 @@
+import 'package:clean_ecommerce/data/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 const defaultURL = 'http://localhost:3000';
 
 class DataConfig {
@@ -10,4 +13,8 @@ class DataConfig {
     'PRODUCT_IMAGES_URL',
     defaultValue: defaultURL,
   );
+
+  static void initializeFirebase() {
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  }
 }
