@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "simple-api-ecommerce",
+          "configurations": {
+            "android": "1:697001739130:android:6dd9f204bdc4a6e15bccc3",
+            "web": "1:697001739130:web:4c1106834374ea555bccc3"
+          }
+        }
+      },
+      "android": {
+        "default": {
+          "projectId": "simple-api-ecommerce",
+          "appId": "1:697001739130:android:6dd9f204bdc4a6e15bccc3",
+          "fileOutput": "android/app/google-services.json"
+        }
+      }
+    }
+  }
+}

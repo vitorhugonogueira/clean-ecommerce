@@ -1,3 +1,4 @@
+import 'package:clean_ecommerce/ui/app_config.dart';
 import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:clean_ecommerce/ui/app_router.dart';
 import 'package:clean_ecommerce/ui/pages/bloc/cart/cart_bloc_page.dart';
@@ -11,10 +12,28 @@ import 'package:clean_ecommerce/ui/pages/provider/product/product_provider_page.
 import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/product/product_state_page.dart';
 import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page.dart';
+import 'package:clean_ecommerce/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class CleanArchEcommerce extends StatelessWidget {
+class CleanArchEcommerce extends StatefulWidget {
   const CleanArchEcommerce({super.key});
+
+  @override
+  State<CleanArchEcommerce> createState() => _CleanArchEcommerceState();
+}
+
+class _CleanArchEcommerceState extends State<CleanArchEcommerce> {
+  AppDataSource dataSource = AppDataSource.api;
+
+  void changeDataSource(AppDataSource source) {
+    if (source == AppDataSource.firebase) {
+      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    }
+    setState(() {
+      dataSource = source;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +41,14 @@ class CleanArchEcommerce extends StatelessWidget {
       title: 'Clean Arch E-Commerce',
       theme: ThemeData(useMaterial3: true, fontFamily: 'Montserrat'),
       routes: {
-        '/': (context) => MenuPage(),
+        '/':
+            (context) => MenuPage(
+              currentDataSource: dataSource,
+              changeDataSource: changeDataSource,
+            ),
         '/state-app':
             (context) => AppRouter(
+              dataSource: dataSource,
               flavor: Flavor.state,
               listingScreenBuilder: (_) => ListingStatePage(),
               cartScreenBuilder: (_) => CartStatePage(),
@@ -34,6 +58,7 @@ class CleanArchEcommerce extends StatelessWidget {
             ),
         '/provider-app':
             (context) => AppRouter(
+              dataSource: dataSource,
               flavor: Flavor.provider,
               listingScreenBuilder: (_) => ListingProviderPage(),
               cartScreenBuilder: (_) => CartProviderPage(),
@@ -43,6 +68,7 @@ class CleanArchEcommerce extends StatelessWidget {
             ),
         '/bloc-app':
             (context) => AppRouter(
+              dataSource: dataSource,
               flavor: Flavor.bloc,
               listingScreenBuilder: (_) => ListingBlocPage(),
               cartScreenBuilder: (_) => CartBlocPage(),
@@ -50,7 +76,7 @@ class CleanArchEcommerce extends StatelessWidget {
                 return ProductBlocPage(productId: id);
               },
             ),
-        '/mvvm-app': (context) => MvvmRouter(),
+        '/mvvm-app': (context) => MvvmRouter(dataSource: dataSource),
       },
       initialRoute: '/',
     );

@@ -1,5 +1,3 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/entities/item.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
@@ -20,7 +18,7 @@ class CartBlocPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = CartDataSource();
+    final repository = context.read();
     final dialog = EcommerceDialog(context);
     final presenter = CartBlocPagePresenter(cart);
 
@@ -28,7 +26,7 @@ class CartBlocPage extends StatelessWidget {
       cartRepository: repository,
       dialog: dialog,
       presenter: presenter,
-      stockRepository: StockDataSource(),
+      stockRepository: context.read(),
     );
     final decreaseItem = DecreaseCartItemUsecase(
       cartRepository: repository,
@@ -41,7 +39,7 @@ class CartBlocPage extends StatelessWidget {
       presenter: presenter,
     );
     ShowCartDetailsUsecase(
-      repository: CartDataSource(),
+      repository: repository,
       presenter: presenter,
       cart: cart,
     ).execute();

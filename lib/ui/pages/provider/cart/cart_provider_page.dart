@@ -1,7 +1,6 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/entities/item.dart';
+import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/remove_item_to_cart_usecase.dart';
@@ -20,14 +19,14 @@ class CartProviderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = CartDataSource();
+    final repository = context.read<CartRepository>();
     final dialog = EcommerceDialog(context);
     final presenter = CartProviderPagePresenter(
       initialState: CartDetailsState(cart: cart ?? Cart()),
     );
 
     final showDetails = ShowCartDetailsUsecase(
-      repository: CartDataSource(),
+      repository: repository,
       presenter: presenter,
       cart: cart,
     );
@@ -35,7 +34,7 @@ class CartProviderPage extends StatelessWidget {
       cartRepository: repository,
       dialog: dialog,
       presenter: presenter,
-      stockRepository: StockDataSource(),
+      stockRepository: context.read(),
     );
     final decreaseItem = DecreaseCartItemUsecase(
       cartRepository: repository,

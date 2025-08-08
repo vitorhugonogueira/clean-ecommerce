@@ -1,6 +1,6 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
+import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
+import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
+import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
@@ -9,6 +9,7 @@ import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_details.dart';
 import 'package:clean_ecommerce/ui/pages/state/product/product_state_page_presenter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductStatePage extends StatefulWidget {
   final String productId;
@@ -28,9 +29,9 @@ class _ProductStatePageState extends State<ProductStatePage> {
   void initState() {
     super.initState();
 
-    final dataSource = ProductDetailsDataSource();
-    final cartDataSource = CartDataSource();
-    final stockDataSource = StockDataSource();
+    final dataSource = context.read<ProductDetailsRepository>();
+    final cartDataSource = context.read<CartRepository>();
+    final stockDataSource = context.read<StockRepository>();
     final dialog = EcommerceDialog(context);
     final presenter = ProductStatePagePresenter(
       onStateChanged: (newState) {

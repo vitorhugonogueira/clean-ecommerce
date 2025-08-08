@@ -1,7 +1,6 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/cart.dart';
 import 'package:clean_ecommerce/domain/entities/item.dart';
+import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
 import 'package:clean_ecommerce/ui/common/states/cart_details_state.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/decrease_cart_item_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/cart/increase_cart_item_usecase.dart';
@@ -10,6 +9,7 @@ import 'package:clean_ecommerce/domain/usecases/cart/show_cart_details_usecase.d
 import 'package:clean_ecommerce/ui/common/widgets/cart/cart_details.dart';
 import 'package:clean_ecommerce/ui/pages/state/cart/cart_state_page_presenter.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class CartStatePage extends StatefulWidget {
@@ -29,8 +29,8 @@ class _CartStatePageState extends State<CartStatePage> {
   CartDetailsState _state = CartDetailsState(cart: Cart());
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     final presenter = CartStatePagePresenter(
       initialState: _state,
       onStateChanged: (newState) {
@@ -40,11 +40,11 @@ class _CartStatePageState extends State<CartStatePage> {
         });
       },
     );
-    final repository = CartDataSource();
+    final repository = context.read<CartRepository>();
     final dialog = EcommerceDialog(context);
 
     _showDetailsUseCase = ShowCartDetailsUsecase(
-      repository: CartDataSource(),
+      repository: context.read(),
       presenter: presenter,
       cart: widget.cart,
     );
@@ -52,7 +52,7 @@ class _CartStatePageState extends State<CartStatePage> {
       cartRepository: repository,
       dialog: dialog,
       presenter: presenter,
-      stockRepository: StockDataSource(),
+      stockRepository: context.read(),
     );
     _decreaseItemUseCase = DecreaseCartItemUsecase(
       cartRepository: repository,

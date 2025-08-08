@@ -1,6 +1,5 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
+import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
+import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
@@ -18,11 +17,11 @@ class ProductProviderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final presenter = ProductProviderPagePresenter();
-    final cartDataSource = CartDataSource();
-    final stockDataSource = StockDataSource();
+    final cartDataSource = context.read<CartRepository>();
+    final stockDataSource = context.read<StockRepository>();
     final dialog = EcommerceDialog(context);
     final usecase = ShowProductDetailsUseCase(
-      repository: ProductDetailsDataSource(),
+      repository: context.read(),
       presenter: presenter,
       dialog: dialog,
       cartRepository: cartDataSource,

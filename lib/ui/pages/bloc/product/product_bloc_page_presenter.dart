@@ -1,47 +1,47 @@
 import 'package:bloc/bloc.dart';
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
 import 'package:clean_ecommerce/domain/entities/product.dart';
+import 'package:clean_ecommerce/domain/gateways/dialog_gateway.dart';
+import 'package:clean_ecommerce/domain/gateways/navigator_gateway.dart';
 import 'package:clean_ecommerce/domain/presenters/product_details_presenter.dart';
+import 'package:clean_ecommerce/domain/repositories/cart_repository.dart';
+import 'package:clean_ecommerce/domain/repositories/product_details_repository.dart';
+import 'package:clean_ecommerce/domain/repositories/stock_repository.dart';
 import 'package:clean_ecommerce/domain/usecases/product/add_product_to_cart_usecase.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_product_details_usecase.dart';
-import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
-import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
-import 'package:flutter/material.dart';
 
 class ProductBlocPagePresenter extends Cubit<ProductDetailsState>
     implements ProductDetailsPresenter {
+  final DialogGateway dialog;
+  final NavigatorGateway navigator;
+  final ProductDetailsRepository repository;
+  final CartRepository cartRepository;
+  final StockRepository stockRepository;
   late final ShowProductDetailsUseCase usecase;
   late final AddProductToCartUseCase addProductUsecase;
 
-  ProductBlocPagePresenter(BuildContext context, String productId)
-    : super(ProductDetailsState()) {
-    final cartDataSource = CartDataSource();
-    final stockDataSource = StockDataSource();
-    final dialog = EcommerceDialog(context);
-    final navigator = EcommerceNavigator(
-      context,
-      cartGoBackCallback: () {
-        usecase.execute(productId: productId, product: state.product);
-      },
-    );
-
+  ProductBlocPagePresenter(
+    String productId, {
+    required this.dialog,
+    required this.navigator,
+    required this.repository,
+    required this.cartRepository,
+    required this.stockRepository,
+  }) : super(ProductDetailsState()) {
     usecase = ShowProductDetailsUseCase(
-      repository: ProductDetailsDataSource(),
+      repository: repository,
       presenter: this,
       dialog: dialog,
-      cartRepository: cartDataSource,
-      stockRepository: stockDataSource,
+      cartRepository: cartRepository,
+      stockRepository: stockRepository,
     )..execute(productId: productId);
 
     addProductUsecase = AddProductToCartUseCase(
-      cartRepository: CartDataSource(),
+      cartRepository: cartRepository,
       dialog: dialog,
       navigator: navigator,
       presenter: this,
-      stockRepository: stockDataSource,
+      stockRepository: stockRepository,
     );
   }
 
