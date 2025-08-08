@@ -1,7 +1,4 @@
-import 'package:clean_ecommerce/data/data_sources/cart_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/product_details_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/product_listing_data_source.dart';
-import 'package:clean_ecommerce/data/data_sources/stock_data_source.dart';
+import 'package:clean_ecommerce/ui/app_config.dart';
 import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:clean_ecommerce/ui/app_router.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
@@ -13,27 +10,30 @@ import 'package:clean_ecommerce/ui/pages/mvvm/listing/listing_view_model.dart';
 import 'package:clean_ecommerce/ui/pages/mvvm/product/product_view.dart';
 import 'package:clean_ecommerce/ui/pages/mvvm/product/product_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MvvmRouter extends StatelessWidget {
-  const MvvmRouter({super.key});
+  final AppDataSource dataSource;
+  const MvvmRouter({super.key, required this.dataSource});
 
   @override
   Widget build(BuildContext context) {
     return AppRouter(
+      dataSource: dataSource,
       flavor: Flavor.mvvm,
       listingScreenBuilder:
           (context) => ListingView(
             viewModel: ListingViewModel(
-              repository: ProductListingDataSource(),
+              repository: context.read(),
               dialog: EcommerceDialog(context),
             ),
           ),
       cartScreenBuilder:
           (context) => CartView(
             viewModel: CartViewModel(
-              repository: CartDataSource(),
+              repository: context.read(),
               dialog: EcommerceDialog(context),
-              stockRepository: StockDataSource(),
+              stockRepository: context.read(),
             ),
           ),
       productScreenBuilder: (context, String id) {
@@ -49,9 +49,9 @@ class MvvmRouter extends StatelessWidget {
                   product: viewModel.state.product,
                 ),
           ),
-          cartRepository: CartDataSource(),
-          stockRepository: StockDataSource(),
-          repository: ProductDetailsDataSource(),
+          cartRepository: context.read(),
+          stockRepository: context.read(),
+          repository: context.read(),
         );
         return ProductView(viewModel: viewModel);
       },

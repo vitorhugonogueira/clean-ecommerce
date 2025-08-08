@@ -20,6 +20,9 @@ _Publicado em: [clean-ecommerce.vercel.app](https://clean-ecommerce.vercel.app/)
     - <font color="green">Provider</font>
     - <font color="brown">Bloc</font>
     - <font color="blue">Provider (MVVM)</font>
+- Incluir fontes de dados personalizaveis:
+    - API
+    - Firebase
 
 ## Introdução
 

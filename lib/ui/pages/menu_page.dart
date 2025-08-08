@@ -1,10 +1,13 @@
 import 'dart:js_interop_unsafe';
+import 'package:clean_ecommerce/ui/app_config.dart';
 import 'package:clean_ecommerce/ui/app_flavor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:js_interop' as js;
 
 class MenuPage extends StatefulWidget {
+  final AppDataSource currentDataSource;
+  final Function(AppDataSource source) changeDataSource;
   final schemes = [
     {
       'label': 'setState',
@@ -27,7 +30,11 @@ class MenuPage extends StatefulWidget {
       'scheme': AppFlavor.colorScheme(Flavor.mvvm),
     },
   ];
-  MenuPage({super.key});
+  MenuPage({
+    super.key,
+    required this.currentDataSource,
+    required this.changeDataSource,
+  });
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -40,6 +47,15 @@ class _MenuPageState extends State<MenuPage> {
     if (kIsWeb) {
       // ignore: invalid_runtime_check_with_js_interop_types
       js.globalContext.callMethod('hideFlutterSplashScreen' as js.JSAny);
+    }
+  }
+
+  String getDataSourceName(AppDataSource source) {
+    switch (source) {
+      case AppDataSource.api:
+        return 'API';
+      case AppDataSource.firebase:
+        return 'Firebase';
     }
   }
 
@@ -69,7 +85,30 @@ class _MenuPageState extends State<MenuPage> {
                 ],
               ),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:
+                    AppDataSource.values.map((source) {
+                      return Row(
+                        children: [
+                          Radio<AppDataSource>(
+                            value: source,
+                            groupValue: widget.currentDataSource,
+                            onChanged: (val) {
+                              if (val != null) widget.changeDataSource(val);
+                            },
+                          ),
+                          Text(getDataSourceName(source)),
+                          SizedBox(width: 16),
+                        ],
+                      );
+                    }).toList(),
+              ),
+            ),
+            SizedBox(height: 24),
             ...widget.schemes.map((item) {
               final scheme = item['scheme'] as ColorScheme;
               final label = item['label'] as String;

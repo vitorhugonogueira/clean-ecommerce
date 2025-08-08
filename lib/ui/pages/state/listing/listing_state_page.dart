@@ -1,11 +1,11 @@
-import 'package:clean_ecommerce/data/data_sources/product_listing_data_source.dart';
-import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 import 'package:clean_ecommerce/domain/usecases/product/show_products_usecase.dart';
+import 'package:clean_ecommerce/ui/common/states/product_listing_state.dart';
 import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
 import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_listing.dart';
 import 'package:clean_ecommerce/ui/pages/state/listing/listing_state_page_presenter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListingStatePage extends StatefulWidget {
   const ListingStatePage({super.key});
@@ -20,10 +20,9 @@ class _ListingStatePageState extends State<ListingStatePage> {
   ProductListingState _state = ProductListingState();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _navigator = EcommerceNavigator(context);
-    final repository = ProductListingDataSource();
     final dialog = EcommerceDialog(context);
     final presenter = ListingStatePagePresenter(
       onStateChanged: (state) {
@@ -34,7 +33,7 @@ class _ListingStatePageState extends State<ListingStatePage> {
     );
 
     _useCase = ShowProductsUseCase(
-      repository: repository,
+      repository: context.read(),
       presenter: presenter,
       dialog: dialog,
     );

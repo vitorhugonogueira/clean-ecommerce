@@ -1,3 +1,5 @@
+import 'package:clean_ecommerce/ui/common/dialog/ecommerce_dialog.dart';
+import 'package:clean_ecommerce/ui/common/navigator/ecommerce_navigator.dart';
 import 'package:clean_ecommerce/ui/common/states/product_details_state.dart';
 import 'package:clean_ecommerce/ui/common/widgets/product/product_details.dart';
 import 'package:clean_ecommerce/ui/pages/bloc/product/product_bloc_page_presenter.dart';
@@ -11,17 +13,33 @@ class ProductBlocPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = ProductBlocPagePresenter(context, productId);
+    ProductBlocPagePresenter? presenter;
+    presenter = ProductBlocPagePresenter(
+      productId,
+      repository: context.read(),
+      stockRepository: context.read(),
+      cartRepository: context.read(),
+      navigator: EcommerceNavigator(
+        context,
+        cartGoBackCallback: () {
+          presenter?.usecase.execute(
+            productId: productId,
+            product: presenter.state.product,
+          );
+        },
+      ),
+      dialog: EcommerceDialog(context),
+    );
 
     return BlocProvider(
-      create: (_) => presenter,
+      create: (_) => presenter!,
       child: BlocBuilder<ProductBlocPagePresenter, ProductDetailsState>(
         builder: (context, state) {
           return ProductDetails(
             context: context,
             productId: productId,
             state: state,
-            load: presenter.usecase.execute,
+            load: presenter!.usecase.execute,
             addProduct: presenter.addProductUsecase.execute,
           );
         },
